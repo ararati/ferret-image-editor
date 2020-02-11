@@ -1,11 +1,14 @@
 #ifndef GRAYSCALE_H
 #define GRAYSCALE_H
 
+#include <image.h>
 
-class GrayScale
+
+
+class GrayscaleView
 {
 public:
-    GrayScale();
+    static void process(Image *originalImg, Image *processImg);
 };
 
 #endif // GRAYSCALE_H

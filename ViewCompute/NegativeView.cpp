@@ -1,6 +1,6 @@
-#include "NegativeCompute.h"
+#include "NegativeView.h"
 
-void NegativeCompute::process(Image* originalImg, Image* processImg, int brightness)
+void NegativeView::process(Image* originalImg, Image* processImg)
 {
     uint height = originalImg->getHeight(), width = originalImg->getWidth();
     for(int row = 0; row < height; row++)
