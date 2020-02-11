@@ -26,6 +26,8 @@ class Image
         Mat getCvImg();
         uint getWidth();
         uint getHeight();
+        string getPath();
+        void setPath(string val);
 };
 
 #endif // IMAGE_H
