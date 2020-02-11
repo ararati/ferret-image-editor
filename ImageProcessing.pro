@@ -24,19 +24,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    BrightnessCompute/BrighnessCorrection.cpp \
-    BrightnessCompute/BrightnessCompute.cpp \
     Helper.cpp \
-    ViewCompute/NegativeCompute.cpp \
-    image.cpp \
+    Image.cpp \
+    ViewCompute/BinaryView.cpp \
+    ViewCompute/BrightnessView.cpp \
+    ViewCompute/ContrastView.cpp \
+    ViewCompute/GrayscaleView.cpp \
+    ViewCompute/NegativeView.cpp \
+    ViewCompute/SingleColorView.cpp \
+    ViewCompute/SymmetryTransform.cpp \
+    ViewCompute/TransformPosition.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    BrightnessCompute/BrightnessCompute.h \
-    BrightnessCompute/BrightnessCorrection.h \
     Helper.h \
-    ViewCompute/NegativeCompute.h \
+    ViewCompute/BinaryView.h \
+    ViewCompute/BrightnessView.h \
+    ViewCompute/ContrastView.h \
+    ViewCompute/GrayscaleView.h \
+    ViewCompute/NegativeView.h \
+    ViewCompute/SingleColorView.h \
+    ViewCompute/SymmetryTransform.h \
+    ViewCompute/TransformPosition.h \
     image.h \
     mainwindow.h
 
