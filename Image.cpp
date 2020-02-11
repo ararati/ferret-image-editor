@@ -9,6 +9,7 @@ Image::Image(string path, int code)
 {
     this->cv_img = this->fromFile(path, code);
 
+    this->imageSourcePath = path;
     this->width = this->cv_img.cols;
     this->height = this->cv_img.rows;
 }
@@ -44,4 +45,14 @@ uint Image::getWidth()
 uint Image::getHeight()
 {
     return this->height;
+}
+
+string Image::getPath()
+{
+    return this->imageSourcePath;
+}
+
+void Image::setPath(string val)
+{
+    this->imageSourcePath = val;
 }
