@@ -9,6 +9,7 @@ class TransformPosition
 {
 public:
     static void transformX(Image* original, Image* image, int step);
+    static void transformY(Image *original, Image *processImg, int step);
 };
 
 #endif // TRANSFORMPOSITION_H
