@@ -28,6 +28,7 @@ class Image
         uint getHeight();
         string getPath();
         void setPath(string val);
+        void setSvImg(Mat newImg);
 };
 
 #endif // IMAGE_H

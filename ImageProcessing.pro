@@ -33,7 +33,9 @@ SOURCES += \
     ViewCompute/NegativeView.cpp \
     ViewCompute/SingleColorView.cpp \
     ViewCompute/SymmetryTransform.cpp \
+    ViewCompute/TransformAngle.cpp \
     ViewCompute/TransformPosition.cpp \
+    ViewContainer.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -46,7 +48,9 @@ HEADERS += \
     ViewCompute/NegativeView.h \
     ViewCompute/SingleColorView.h \
     ViewCompute/SymmetryTransform.h \
+    ViewCompute/TransformAngle.h \
     ViewCompute/TransformPosition.h \
+    ViewContainer.h \
     image.h \
     mainwindow.h
 
@@ -57,3 +61,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    EditorResources.qrc
