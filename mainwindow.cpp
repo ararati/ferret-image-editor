@@ -8,6 +8,7 @@
 #include <QFileDialog>
 #include <QMouseEvent>
 #include <QMessageBox>
+#include <QInputDialog>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc.hpp>
@@ -22,6 +23,7 @@
 #include <ViewCompute/BrightnessView.h>
 #include <ViewCompute/ContrastView.h>
 #include <ViewCompute/SymmetryTransform.h>
+#include <ViewCompute/TransformAngle.h>
 #include <ViewCompute/TransformPosition.h>
 
 using  namespace std;
@@ -34,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    string path = "D:\\home.jpg";
+    string path = ":/images/home.jpg";
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
@@ -88,6 +90,8 @@ void MainWindow::updateRgbStatus(int x, int y) {
 
     Vec3b pix = this->processImage.getCvImg().at<Vec3b>(x, y);
     ui->rgbStatus_Label->setText("rgb(" + QString::number(pix[0]) + ", " + QString::number(pix[1]) + ", " + QString::number(pix[2]) + ")");
+    ui->xPos_label->setText(QString::number(x));
+    ui->yPos_label->setText(QString::number(y));
 }
 
 void MainWindow::updateViewImage()
@@ -97,6 +101,11 @@ void MainWindow::updateViewImage()
 
 void MainWindow::saveProcessImage()
 {
+    if(this->processImage.getWidth() != this->originalImage.getWidth() && this->processImage.getHeight() != this->originalImage.getHeight()) {
+        Mat newImg(this->processImage.getHeight(), this->processImage.getWidth(), CV_8UC3, Scalar(255, 255, 255));
+        this->originalImage.setSvImg(newImg);
+    }
+
     this->processImage.getCvImg().copyTo(this->originalImage.getCvImg());
 }
 
@@ -110,7 +119,6 @@ void MainWindow::displayImage(Image img, QLabel* source) {
 
     if(img.getWidth() > source->width() || img.getHeight() > source->height()) {
         qImg = qImg.scaled(source->width(), source->height(), Qt::KeepAspectRatio);
-        qInfo() << "scaled";
     }
 
     source->setPixmap(qImg);
@@ -143,12 +151,15 @@ void MainWindow::on_brightnessSlider_valueChanged(int value)
 {
     BrightnessView::process(&this->originalImage, &this->processImage, value);
 
+    this->setCommonSliderValue(value);
+
     this->updateViewImage();
 }
 
 void MainWindow::on_brightnessOk_btn_clicked()
 {
     this->saveProcessImage();
+
     ui->brightnessSlider->setValue(0);
 }
 
@@ -170,12 +181,18 @@ void MainWindow::contrastInputChanged() {
 
 void MainWindow::on_contrastMin_spinBox_valueChanged(int arg1)
 {
-    this->contrastInputChanged();
+    if(arg1 < ui->contrastMax_spinBox->value())
+        this->contrastInputChanged();
+    else
+        ui->contrastMin_spinBox->setValue(ui->contrastMax_spinBox->value()-1);
 }
 
 void MainWindow::on_contrastMax_spinBox_valueChanged(int arg1)
 {
-    this->contrastInputChanged();
+    if(arg1 > ui->contrastMin_spinBox->value())
+        this->contrastInputChanged();
+    else
+        ui->contrastMax_spinBox->setValue(ui->contrastMin_spinBox->value()+1);
 }
 
 
@@ -183,6 +200,8 @@ void MainWindow::on_contrastMax_spinBox_valueChanged(int arg1)
 void MainWindow::on_contrastrgb_Slider_valueChanged(int value)
 {
     ContrastView::processRGB(&this->originalImage, &this->processImage, value);
+
+    this->setCommonSliderValue(value);
 
     this->updateViewImage();
 }
@@ -223,6 +242,7 @@ void MainWindow::saveFileAs() {
 
     imwrite(path.toStdString(), this->originalImage.getCvImg());
     this->originalImage.setPath(path.toStdString());
+    this->processImage.setPath(path.toStdString());
 }
 
 void MainWindow::on_actionOpenFile_triggered()
@@ -262,27 +282,85 @@ void MainWindow::on_actionInfoImage_triggered()
     infoBox.exec();
 }
 
+void MainWindow::setCommonSliderValue(int val) {
+    ui->commonSliderLabel->setText(QString::number(val));
+}
+
 void MainWindow::on_binarTreshold_Slider_valueChanged(int value)
 {
     BinaryView::process(&this->originalImage, &this->processImage, value);
+
+    this->setCommonSliderValue(value);
 
     this->updateViewImage();
 }
 
 void MainWindow::on_action_TransformByHorizontal_triggered()
 {
-    TransformPosition::transformX(&this->originalImage, &this->processImage, -100);
-    this->updateViewImage();
+    int step = QInputDialog::getInt(0, "Смещения по горизонтали", "Введите значение смещения по горизонтали", QLineEdit::Normal);
+    if(step) {
+        TransformPosition::transformX(&this->originalImage, &this->processImage, step);
+        //this->saveProcessImage();
+        this->updateViewImage();
+    }
+}
+
+void MainWindow::on_action_TransformByVertical_triggered()
+{
+    int step = QInputDialog::getInt(0, "Смещения по вертикали", "Введите значение смещения по вертикали", QLineEdit::Normal);
+    if(step) {
+        TransformPosition::transformY(&this->originalImage, &this->processImage, step);
+        //this->saveProcessImage();
+        this->updateViewImage();
+    }
 }
 
 void MainWindow::on_action_symmetryHorizontalTransform_triggered()
 {
     SymmetryTransform::transformHorizontal(&this->originalImage, &this->processImage);
+    this->saveProcessImage();
     this->updateViewImage();
 }
 
 void MainWindow::on_action_symmetryVerticalTransform_triggered()
 {
     SymmetryTransform::transformVertical(&this->originalImage, &this->processImage);
+    this->saveProcessImage();
     this->updateViewImage();
+}
+
+void MainWindow::on_action_TransformAngleLeft_triggered()
+{
+    TransformAngle::rotateLeft(&this->originalImage, &this->processImage);
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_action_TransformAngleRight_triggered()
+{
+    TransformAngle::rotateRight(&this->originalImage, &this->processImage);
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::addImageTab(QString name) {
+    QWidget *newTab = new QWidget(ui->imagesTabs);
+    QLabel* imgLabel = new QLabel("abc", newTab);
+    imgLabel->show();
+    ui->imagesTabs->addTab(newTab, name);
+}
+
+void MainWindow::on_actionNewFile_triggered()
+{
+    this->addImageTab("New image");
+}
+
+void MainWindow::on_imagesTabs_currentChanged(int index)
+{
+
+}
+
+void MainWindow::on_binarOk_btn_clicked()
+{
+    this->saveProcessImage();
 }

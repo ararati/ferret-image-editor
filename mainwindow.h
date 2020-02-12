@@ -21,6 +21,8 @@ public:
 
     virtual bool eventFilter(QObject *obj, QEvent *event) override;
     void updateRgbStatus(int x, int y);
+    void addImageTab(QString name);
+    void setCommonSliderValue(int val);
 private slots:
 
     void on_brightnessSlider_valueChanged(int value);
@@ -64,6 +66,18 @@ private slots:
     void on_action_symmetryHorizontalTransform_triggered();
 
     void on_action_symmetryVerticalTransform_triggered();
+
+    void on_action_TransformByVertical_triggered();
+
+    void on_action_TransformAngleLeft_triggered();
+
+    void on_action_TransformAngleRight_triggered();
+
+    void on_actionNewFile_triggered();
+
+    void on_imagesTabs_currentChanged(int index);
+
+    void on_binarOk_btn_clicked();
 
 private:
     Ui::MainWindow *ui;
