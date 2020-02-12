@@ -1,5 +1,7 @@
 #include "image.h"
 
+#include <QFile>
+
 Image::Image()
 {
 
@@ -29,7 +31,18 @@ QImage Image::toQImage()
 
 Mat Image::fromFile(string path, int code)
 {
-    return imread(path, code);
+    QFile file(QString::fromStdString(path));
+    Mat m;
+    if(file.open(QIODevice::ReadOnly))
+    {
+        qint64 sz = file.size();
+        std::vector<uchar> buf(sz);
+        file.read((char*)buf.data(), sz);
+        m = imdecode(buf, code);
+    }
+
+     return m;
+    //return imread(path, code);
 }
 
 Mat Image::getCvImg()
@@ -55,4 +68,13 @@ string Image::getPath()
 void Image::setPath(string val)
 {
     this->imageSourcePath = val;
+}
+
+void Image::setSvImg(Mat newImg) {
+    this->cv_img.release();
+
+    this->cv_img = newImg;
+
+    this->width = this->cv_img.cols;
+    this->height = this->cv_img.rows;
 }
