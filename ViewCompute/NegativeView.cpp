@@ -2,18 +2,13 @@
 
 void NegativeView::process(Image* originalImg, Image* processImg)
 {
-    uint height = originalImg->getHeight(), width = originalImg->getWidth();
-    for(int row = 0; row < height; row++)
+    uint height = originalImg->height(), width = originalImg->width();
+    for(int x = 0; x < width; x++)
     {
-        for(int col = 0; col < width; col++)
+        for(int y = 0; y < height; y++)
         {
-            Vec3b px = originalImg->getCvImg().at<Vec3b>(row, col);
-
-            processImg->getCvImg().at<Vec3b>(row, col) = Vec3b(
-                        255-px[0],
-                        255-px[1],
-                        255-px[2]
-                    );
+            QRgb px = originalImg->pixel(x, y);
+            processImg->setPixel(x, y, qRgb(255-qRed(px), 255-qGreen(px), 255-qBlue(px)));
         }
     }
 }
