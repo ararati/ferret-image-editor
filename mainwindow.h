@@ -79,14 +79,17 @@ private slots:
 
     void on_binarOk_btn_clicked();
 
+    void on_brightnessSlider_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
-    void displayImage(Image img, QLabel* source);
     Image originalImage;
     Image processImage;
+
+    void displayImage(Image img, QLabel* source);
     void contrastInputChanged();
     void processViewType(QString type);
-    void loadImageByPath(string path);
+    void loadImageByPath(QString path);
     void saveFile();
     void saveFileAs();
 };

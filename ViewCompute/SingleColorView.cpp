@@ -1,19 +1,27 @@
 #include "SingleColorView.h"
 
 void SingleColorView::process(Image *originalImg, Image *processImg, int colorIndex) {
-    uint height = originalImg->getHeight(), width = originalImg->getWidth();
-    for(int row = 0; row < height; row++)
+    uint height = originalImg->height(), width = originalImg->width();
+
+    float k;
+    QRgb px;
+    for(int x = 0; x < width; x++)
     {
-        for(int col = 0; col < width; col++)
+        for(int y = 0; y < height; y++)
         {
-            Vec3b px = originalImg->getCvImg().at<Vec3b>(row, col);
-            for(int i = 0; i < 3; i++) {
-                if(i == colorIndex) {
-                    processImg->getCvImg().at<Vec3b>(row, col)[i] = 0.2126 * px[2] + 0.7152 * px[0] + 0.0722 * px[1];
-                } else {
-                    processImg->getCvImg().at<Vec3b>(row, col)[i] = 0;
-                }
-            }
+            px = originalImg->pixel(x, y);
+            k = 0.2126 * qRed(px) + 0.7152 * qBlue(px) + 0.0722 * qGreen(px);
+
+            QColor color(0, 0, 0);
+            if(colorIndex == 0)
+                color.setRed(k);
+            else if(colorIndex == 1)
+                color.setGreen(k);
+            else
+                color.setBlue(k);
+
+            processImg->setPixel(x, y, color.rgb());
+
         }
     }
 }

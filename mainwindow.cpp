@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
-    string path = ":/images/home.jpg";
+    QString path = ":/images/home.jpg";
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
@@ -53,6 +53,14 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMouseTracking(true);
     installEventFilter(this);
 
+    QImage img(":/images/home.jpg");
+
+    if(img.width() > ui->imageLabel->width() || img.height() > ui->imageLabel->height()) {
+        img = img.scaled(ui->imageLabel->width(), ui->imageLabel->height(), Qt::KeepAspectRatio);
+    }
+
+    ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+
 //    this->actionEvent()->
 }
 
@@ -61,7 +69,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::loadImageByPath(string path) {
+void MainWindow::loadImageByPath(QString path) {
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
@@ -83,15 +91,15 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 }
 
 void MainWindow::updateRgbStatus(int x, int y) {
-    uint height = this->processImage.getWidth(), width = this->processImage.getHeight();
+    uint height = this->processImage.width(), width = this->processImage.height();
 
     if(x > width || x < 0 || y < 0 || y > height)
         return;
 
-    Vec3b pix = this->processImage.getCvImg().at<Vec3b>(x, y);
-    ui->rgbStatus_Label->setText("rgb(" + QString::number(pix[0]) + ", " + QString::number(pix[1]) + ", " + QString::number(pix[2]) + ")");
-    ui->xPos_label->setText(QString::number(x));
-    ui->yPos_label->setText(QString::number(y));
+//    Vec3b pix = this->processImage.getCvImg().at<Vec3b>(x, y);
+//    ui->rgbStatus_Label->setText("rgb(" + QString::number(pix[0]) + ", " + QString::number(pix[1]) + ", " + QString::number(pix[2]) + ")");
+//    ui->xPos_label->setText(QString::number(x));
+//    ui->yPos_label->setText(QString::number(y));
 }
 
 void MainWindow::updateViewImage()
@@ -101,23 +109,24 @@ void MainWindow::updateViewImage()
 
 void MainWindow::saveProcessImage()
 {
-    if(this->processImage.getWidth() != this->originalImage.getWidth() && this->processImage.getHeight() != this->originalImage.getHeight()) {
-        Mat newImg(this->processImage.getHeight(), this->processImage.getWidth(), CV_8UC3, Scalar(255, 255, 255));
-        this->originalImage.setSvImg(newImg);
+    if(this->processImage.width() != this->originalImage.width() && this->processImage.height() != this->originalImage.height()) {
+        //Mat newImg(this->processImage.height(), this->processImage.width(), CV_8UC3, Scalar(255, 255, 255));
+        //this->originalImage.setSvImg(newImg);
+        this->originalImage.copyFrom(&this->processImage);
     }
 
-    this->processImage.getCvImg().copyTo(this->originalImage.getCvImg());
+//    this->processImage.getCvImg().copyTo(this->originalImage.getCvImg());
 }
 
 void MainWindow::revertProcessImage()
 {
-    this->originalImage.getCvImg().copyTo(this->processImage.getCvImg());
+//    this->originalImage.getCvImg().copyTo(this->processImage.getCvImg());
 }
 
 void MainWindow::displayImage(Image img, QLabel* source) {
-    QPixmap qImg = QPixmap::fromImage(img.toQImage());
+    QPixmap qImg = QPixmap::fromImage(img);
 
-    if(img.getWidth() > source->width() || img.getHeight() > source->height()) {
+    if(img.width() > source->width() || img.height() > source->height()) {
         qImg = qImg.scaled(source->width(), source->height(), Qt::KeepAspectRatio);
     }
 
@@ -132,11 +141,11 @@ void MainWindow::processViewType(QString type) {
     } else if(type == "Чёрно-белое") {
         GrayscaleView::process(&this->originalImage, &this->processImage);
     } else if(type == "Одноцветное Red") {
-        SingleColorView::process(&this->originalImage, &this->processImage, 2);
+        SingleColorView::process(&this->originalImage, &this->processImage, 0);
     } else if(type == "Одноцветное Green") {
         SingleColorView::process(&this->originalImage, &this->processImage, 1);
     } else if(type == "Одноцветное Blue") {
-        SingleColorView::process(&this->originalImage, &this->processImage, 0);
+        SingleColorView::process(&this->originalImage, &this->processImage, 2);
     }
 }
 
@@ -228,21 +237,21 @@ void MainWindow::openFile()
 
     if(path == "") return;
 
-    this->loadImageByPath(path.toStdString());
+    this->loadImageByPath(path);
 }
 
 void MainWindow::saveFile() {
-    imwrite(this->originalImage.getPath(), this->originalImage.getCvImg());
+//    imwrite(this->originalImage.path(), this->originalImage.getCvImg());
 }
 
 void MainWindow::saveFileAs() {
-    QString path = QFileDialog::getSaveFileName(0, "Save file", QString::fromStdString(this->originalImage.getPath()), "*.png *.jpg *.jpeg *.bmp");
+    QString path = QFileDialog::getSaveFileName(0, "Save file", this->originalImage.path(), "*.png *.jpg *.jpeg *.bmp");
 
     if(path == "") return;
 
-    imwrite(path.toStdString(), this->originalImage.getCvImg());
-    this->originalImage.setPath(path.toStdString());
-    this->processImage.setPath(path.toStdString());
+//    imwrite(path.toStdString(), this->originalImage.getCvImg());
+    this->originalImage.setPath(path);
+    this->processImage.setPath(path);
 }
 
 void MainWindow::on_actionOpenFile_triggered()
@@ -271,12 +280,12 @@ void MainWindow::on_actionInfoImage_triggered()
                            "Channels: %4\n"
                            "Depth: %5\n"
                            "").arg(
-                                QString::fromStdString(this->processImage.getPath()),
-                                QString::number(this->processImage.getWidth()),
-                                QString::number(this->processImage.getHeight()),
+                                this->processImage.path(),
+                                QString::number(this->processImage.width()),
+                                QString::number(this->processImage.height())
 
-                                QString::number(this->processImage.getCvImg().channels()),
-                                QString::number(this->processImage.getCvImg().depth())
+//                                QString::number(this->processImage.getCvImg().channels()),
+//                                QString::number(this->processImage.getCvImg().depth())
                                 );
     infoBox.setText(info);
     infoBox.exec();
@@ -363,4 +372,9 @@ void MainWindow::on_imagesTabs_currentChanged(int index)
 void MainWindow::on_binarOk_btn_clicked()
 {
     this->saveProcessImage();
+}
+
+void MainWindow::on_brightnessSlider_sliderReleased()
+{
+    qInfo() << "released";
 }

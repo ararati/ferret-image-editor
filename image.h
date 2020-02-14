@@ -9,26 +9,30 @@
 using namespace std;
 using namespace cv;
 
-class Image
+class Image : public QImage
 {
     private:
-        Mat cv_img;
-        Mat tmp_img;
-        string imageSourcePath;
-        uint width;
-        uint height;
-        Mat fromFile(string path, int code);
+//        QImage* original_;
+//        QImage* tmpImage_;
+        QString path_;
+
+        QImage fromFile(QString path, int code);
 
     public:
+        const QString & path() const { return path_;}
+//        QImage * qImage() { return original_;}
+
+
         Image();
-        Image(string path, int code = IMREAD_UNCHANGED);
+        Image(QString path);
+
         QImage toQImage();
-        Mat getCvImg();
-        uint getWidth();
-        uint getHeight();
-        string getPath();
-        void setPath(string val);
-        void setSvImg(Mat newImg);
+//        Mat getCvImg();
+
+        void copyFrom(Image *);
+//        void setSvImg(Mat newImg);
+        void setPath(QString path);
+        bool sameSize(QImage *img);
 };
 
 #endif // IMAGE_H
