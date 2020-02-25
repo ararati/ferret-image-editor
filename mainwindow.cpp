@@ -10,9 +10,9 @@
 #include <QMessageBox>
 #include <QInputDialog>
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/highgui.hpp>
+//#include <opencv2/opencv.hpp>
+//#include <opencv2/imgproc.hpp>
+//#include <opencv2/highgui.hpp>
 #include<QDebug>
 #include "ViewCompute/NegativeView.h"
 #include <ViewCompute/GrayscaleView.h>
@@ -22,12 +22,15 @@
 #include <ViewCompute/BrightnessView.h>
 #include <ViewCompute/BrightnessView.h>
 #include <ViewCompute/ContrastView.h>
+#include <ViewCompute/HistogramEqualization.h>
 #include <ViewCompute/SymmetryTransform.h>
 #include <ViewCompute/TransformAngle.h>
 #include <ViewCompute/TransformPosition.h>
 
+#include <Windows/PlotDialog.h>
+
 using  namespace std;
-using namespace cv;
+//using namespace cv;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -35,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
+
+    plotDialog = new PlotDialog(this);
+    plotDialog->setModal(false);
 
     QString path = ":/images/home.jpg";
     this->originalImage = Image(path);
@@ -55,13 +61,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     QImage img(":/images/home.jpg");
 
-    if(img.width() > ui->imageLabel->width() || img.height() > ui->imageLabel->height()) {
-        img = img.scaled(ui->imageLabel->width(), ui->imageLabel->height(), Qt::KeepAspectRatio);
+    if(img.width() > ui->label->width() || img.height() > ui->label->height()) {
+        img = img.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio);
     }
 
-    ui->imageLabel->setPixmap(QPixmap::fromImage(img));
+    ui->label->setPixmap(QPixmap::fromImage(img));
 
-//    this->actionEvent()->
+    QObject::connect(plotDialog, SIGNAL(rejected()), this, SLOT(plotDialogClosed()));
 }
 
 MainWindow::~MainWindow()
@@ -105,22 +111,44 @@ void MainWindow::updateRgbStatus(int x, int y) {
 void MainWindow::updateViewImage()
 {
     this->displayImage(this->processImage, ui->label);
+
+    if(plotDialogIsOpen)
+        this->updateHistogramEqualization();
+}
+
+void MainWindow::updateHistogramEqualization() {
+    QVector<double> x(256);
+    for(int i =  0; i < 256; i++) {
+        x[i] = i;
+    }
+    QVector<double> y = HistogramEqualization::bwBrightnessData(&this->processImage);
+
+    double maxY = *std::max_element(y.constBegin(), y.constEnd());
+
+    QCustomPlot* plot = plotDialog->getPlot();
+
+    plot->xAxis->setLabel("brightness");
+    plot->yAxis->setLabel("intensity");
+
+    plot->xAxis->setRange(0, 255);
+    plot->yAxis->setRange(0, maxY);
+
+    QCPBars *newBars = new QCPBars(plot->xAxis, plot->yAxis);
+
+    newBars->setName("Country population");
+    newBars->setData(x, y);
+    plot->replot();
+    plot->clearPlottables();
 }
 
 void MainWindow::saveProcessImage()
 {
-    if(this->processImage.width() != this->originalImage.width() && this->processImage.height() != this->originalImage.height()) {
-        //Mat newImg(this->processImage.height(), this->processImage.width(), CV_8UC3, Scalar(255, 255, 255));
-        //this->originalImage.setSvImg(newImg);
-        this->originalImage.copyFrom(&this->processImage);
-    }
-
-//    this->processImage.getCvImg().copyTo(this->originalImage.getCvImg());
+    this->originalImage.copyFrom(&this->processImage);
 }
 
 void MainWindow::revertProcessImage()
 {
-//    this->originalImage.getCvImg().copyTo(this->processImage.getCvImg());
+    this->processImage.copyFrom(&this->originalImage);
 }
 
 void MainWindow::displayImage(Image img, QLabel* source) {
@@ -165,21 +193,6 @@ void MainWindow::on_brightnessSlider_valueChanged(int value)
     this->updateViewImage();
 }
 
-void MainWindow::on_brightnessOk_btn_clicked()
-{
-    this->saveProcessImage();
-
-    ui->brightnessSlider->setValue(0);
-}
-
-//Contrast
-void MainWindow::on_contrastOk_btn_clicked()
-{
-    this->saveProcessImage();
-    ui->contrastMin_spinBox->setValue(0);
-    ui->contrastMax_spinBox->setValue(255);
-}
-
 void MainWindow::contrastInputChanged() {
     int min = ui->contrastMin_spinBox->value();
     int max = ui->contrastMax_spinBox->value();
@@ -215,20 +228,10 @@ void MainWindow::on_contrastrgb_Slider_valueChanged(int value)
     this->updateViewImage();
 }
 
-void MainWindow::on_contrastrgbOk_btn_clicked()
-{
-    this->saveProcessImage();
-    ui->contrastrgb_Slider->setValue(0);
-}
-
-void MainWindow::on_discard_pushButton_clicked()
-{
-    this->revertProcessImage();
-}
-
 void MainWindow::on_viewType_btn_clicked()
 {
     this->saveProcessImage();
+    ui->viewTypeComboBox->setCurrentIndex(0);
 }
 
 void MainWindow::openFile()
@@ -241,6 +244,7 @@ void MainWindow::openFile()
 }
 
 void MainWindow::saveFile() {
+    this->originalImage.save(this->originalImage.path());
 //    imwrite(this->originalImage.path(), this->originalImage.getCvImg());
 }
 
@@ -249,6 +253,7 @@ void MainWindow::saveFileAs() {
 
     if(path == "") return;
 
+    this->originalImage.save(path);
 //    imwrite(path.toStdString(), this->originalImage.getCvImg());
     this->originalImage.setPath(path);
     this->processImage.setPath(path);
@@ -369,12 +374,44 @@ void MainWindow::on_imagesTabs_currentChanged(int index)
 
 }
 
-void MainWindow::on_binarOk_btn_clicked()
-{
-    this->saveProcessImage();
-}
-
 void MainWindow::on_brightnessSlider_sliderReleased()
 {
-    qInfo() << "released";
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_contrastrgb_Slider_sliderReleased()
+{
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_binarTreshold_Slider_sliderReleased()
+{
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_contrastBW_okBtn_clicked()
+{
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_action_equalizeHist_triggered()
+{
+    this->plotDialog->show();
+    plotDialogIsOpen = true;
+    updateHistogramEqualization();
+}
+
+void MainWindow::on_action_normalizationImage_triggered()
+{
+    HistogramEqualization::bwNormalization(&this->processImage);
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::plotDialogClosed() {
+    plotDialogIsOpen = false;
 }

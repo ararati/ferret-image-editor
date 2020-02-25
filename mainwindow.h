@@ -2,9 +2,12 @@
 #define MAINWINDOW_H
 
 #include "image.h"
+#include "qcustomplot.h"
 
 #include <QLabel>
 #include <QMainWindow>
+
+#include <Windows/PlotDialog.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,29 +26,22 @@ public:
     void updateRgbStatus(int x, int y);
     void addImageTab(QString name);
     void setCommonSliderValue(int val);
+    void updateHistogramEqualization();
+
 private slots:
 
     void on_brightnessSlider_valueChanged(int value);
 
     void on_viewTypeComboBox_currentTextChanged(const QString &arg1);
 
-    void on_brightnessOk_btn_clicked();
-
     void saveProcessImage();
     void revertProcessImage();
-
-    void on_contrastOk_btn_clicked();
-
 
     void on_contrastMin_spinBox_valueChanged(int arg1);
 
     void on_contrastMax_spinBox_valueChanged(int arg1);
 
     void on_contrastrgb_Slider_valueChanged(int value);
-
-    void on_contrastrgbOk_btn_clicked();
-
-    void on_discard_pushButton_clicked();
 
     void on_viewType_btn_clicked();
 
@@ -77,14 +73,29 @@ private slots:
 
     void on_imagesTabs_currentChanged(int index);
 
-    void on_binarOk_btn_clicked();
-
     void on_brightnessSlider_sliderReleased();
+
+    void on_contrastrgb_Slider_sliderReleased();
+
+    void on_binarTreshold_Slider_sliderReleased();
+
+    void on_contrastBW_okBtn_clicked();
+
+    void on_action_equalizeHist_triggered();
+
+    void on_action_normalizationImage_triggered();
+
+    void plotDialogClosed();
+
+signals:
+//    void plotDialogClosed();
 
 private:
     Ui::MainWindow *ui;
     Image originalImage;
     Image processImage;
+    PlotDialog *plotDialog;
+    bool plotDialogIsOpen = false;
 
     void displayImage(Image img, QLabel* source);
     void contrastInputChanged();

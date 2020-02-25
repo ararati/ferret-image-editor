@@ -9,7 +9,8 @@ void GrayscaleView::process(Image *originalImg, Image *processImg)
         for(int y = 0; y < height; y++)
         {
             QRgb px = originalImg->pixel(x, y);
-            float k = 0.2126 * qRed(px) + 0.7152 * qBlue(px) + 0.0722 * qGreen(px);
+//            float k = 0.2126 * qRed(px) + 0.7152 * qBlue(px) + 0.0722 * qGreen(px);
+            int k = 0.299 * qRed(px) + 0.587 * qGreen(px) + 0.114 * qBlue(px);
             processImg->setPixel(x, y, qRgb(k, k, k));
         }
     }

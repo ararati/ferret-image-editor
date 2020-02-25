@@ -3,12 +3,14 @@
 
 void SymmetryTransform::transformHorizontal(Image *originalImg, Image *processImg)
 {
-    uint height = processImg->height(), width = processImg->width();
-    for(int row = 0; row < height; row++)
+    uint height = processImg->height(), width = processImg->width()-1;
+    for(int x = 0; x < width/2; x++)
     {
-        for(int col = 0; col < width/2; col++)
+        for(int y = 0; y < height; y++)
         {
-//            processImg->getCvImg().at<Vec3b>(row, col) =  processImg->getCvImg().at<Vec3b>(row, width-col);
+
+            QRgb px = processImg->pixel(x, y);
+            processImg->setPixel(x, y, processImg->pixel(width-x, y));
         }
     }
 }
@@ -17,15 +19,15 @@ void SymmetryTransform::transformVertical(Image *originalImg, Image *processImg)
 {
     try {
     uint height = processImg->height()-1, width = processImg->width();
-    for(int row = 0; row < height/2; row++)
+    for(int x = 0; x < width; x++)
     {
-        for(int col = 0; col < width; col++)
+        for(int y = 0; y < height/2; y++)
         {
-            //qInfo() << height-row;
-//            processImg->getCvImg().at<Vec3b>(row, col) =  processImg->getCvImg().at<Vec3b>(height-row, col);
+            QRgb px = processImg->pixel(x, y);
+            processImg->setPixel(x, y, processImg->pixel(x, height-y));
         }
     }
-    } catch(Exception &e) {
+    } catch(exception &e) {
         qInfo() << e.what();
     }
 }

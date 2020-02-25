@@ -1,16 +1,16 @@
-QT       += core gui opengl
+QT       += core gui opengl printsupport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++11
 
-INCLUDEPATH += D:\OpenCV\opencv-mingw\install\include
+#INCLUDEPATH += D:\OpenCV\opencv-mingw\install\include
 
-LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_core420.dll
-LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_highgui420.dll
-LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_imgcodecs420.dll
-LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_imgproc420.dll
-LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_calib3d420.dll
+#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_core420.dll
+#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_highgui420.dll
+#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_imgcodecs420.dll
+#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_imgproc420.dll
+#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_calib3d420.dll
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -30,14 +30,17 @@ SOURCES += \
     ViewCompute/BrightnessView.cpp \
     ViewCompute/ContrastView.cpp \
     ViewCompute/GrayscaleView.cpp \
+    ViewCompute/HistogramEqualization.cpp \
     ViewCompute/NegativeView.cpp \
     ViewCompute/SingleColorView.cpp \
     ViewCompute/SymmetryTransform.cpp \
     ViewCompute/TransformAngle.cpp \
     ViewCompute/TransformPosition.cpp \
     ViewContainer.cpp \
+    Windows/PlotDialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    qcustomplot.cpp
 
 HEADERS += \
     Helper.h \
@@ -45,16 +48,21 @@ HEADERS += \
     ViewCompute/BrightnessView.h \
     ViewCompute/ContrastView.h \
     ViewCompute/GrayscaleView.h \
+    ViewCompute/HistogramEqualization.h \
     ViewCompute/NegativeView.h \
     ViewCompute/SingleColorView.h \
     ViewCompute/SymmetryTransform.h \
     ViewCompute/TransformAngle.h \
     ViewCompute/TransformPosition.h \
     ViewContainer.h \
+    Windows/PlotDialog.h \
     image.h \
-    mainwindow.h
+    mainwindow.h \
+    qcustomplot.h
 
 FORMS += \
+    Windows/PlotDialog.ui \
+    Windows/PlotWindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.

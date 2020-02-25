@@ -43,7 +43,7 @@ QDialogButtonBox  QPushButton
       <x>860</x>
       <y>10</y>
       <width>281</width>
-      <height>621</height>
+      <height>625</height>
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
@@ -64,7 +64,7 @@ QDialogButtonBox  QPushButton
        <x>0</x>
        <y>0</y>
        <width>279</width>
-       <height>619</height>
+       <height>623</height>
       </rect>
      </property>
      <widget class="QGroupBox" name="groupBox_2">
@@ -134,13 +134,13 @@ QDialogButtonBox  QPushButton
         <string>Max:</string>
        </property>
       </widget>
-      <widget class="QToolButton" name="contrastOk_btn">
+      <widget class="QToolButton" name="contrastBW_okBtn">
        <property name="geometry">
         <rect>
          <x>230</x>
          <y>20</y>
          <width>24</width>
-         <height>21</height>
+         <height>22</height>
         </rect>
        </property>
        <property name="text">
@@ -169,7 +169,7 @@ QDialogButtonBox  QPushButton
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>211</width>
+         <width>241</width>
          <height>22</height>
         </rect>
        </property>
@@ -181,23 +181,6 @@ QDialogButtonBox  QPushButton
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-      <widget class="QToolButton" name="brightnessOk_btn">
-       <property name="geometry">
-        <rect>
-         <x>230</x>
-         <y>20</y>
-         <width>24</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="EditorResources.qrc">
-         <normaloff>:/images/icon-save.png</normaloff>:/images/icon-save.png</iconset>
        </property>
       </widget>
      </widget>
@@ -235,7 +218,7 @@ QDialogButtonBox  QPushButton
          <x>230</x>
          <y>20</y>
          <width>24</width>
-         <height>21</height>
+         <height>22</height>
         </rect>
        </property>
        <property name="text">
@@ -259,29 +242,12 @@ QDialogButtonBox  QPushButton
       <property name="title">
        <string>Контраст цветной</string>
       </property>
-      <widget class="QToolButton" name="contrastrgbOk_btn">
-       <property name="geometry">
-        <rect>
-         <x>230</x>
-         <y>20</y>
-         <width>24</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>✔</string>
-       </property>
-       <property name="icon">
-        <iconset resource="EditorResources.qrc">
-         <normaloff>:/images/icon-save.png</normaloff>:/images/icon-save.png</iconset>
-       </property>
-      </widget>
       <widget class="QSlider" name="contrastrgb_Slider">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>211</width>
+         <width>241</width>
          <height>22</height>
         </rect>
        </property>
@@ -296,22 +262,6 @@ QDialogButtonBox  QPushButton
        </property>
       </widget>
      </widget>
-     <widget class="QPushButton" name="discard_pushButton">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>190</x>
-        <y>580</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>discard</string>
-      </property>
-     </widget>
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
@@ -324,29 +274,12 @@ QDialogButtonBox  QPushButton
       <property name="title">
        <string>Бинаризация</string>
       </property>
-      <widget class="QToolButton" name="binarOk_btn">
-       <property name="geometry">
-        <rect>
-         <x>230</x>
-         <y>20</y>
-         <width>24</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>✔</string>
-       </property>
-       <property name="icon">
-        <iconset resource="EditorResources.qrc">
-         <normaloff>:/images/icon-save.png</normaloff>:/images/icon-save.png</iconset>
-       </property>
-      </widget>
       <widget class="QSlider" name="binarTreshold_Slider">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>211</width>
+         <width>241</width>
          <height>22</height>
         </rect>
        </property>
@@ -367,9 +300,12 @@ QDialogButtonBox  QPushButton
     </widget>
    </widget>
    <widget class="QLabel" name="rgbStatus_Label">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>140</x>
       <y>640</y>
       <width>101</width>
       <height>20</height>
@@ -380,9 +316,12 @@ QDialogButtonBox  QPushButton
     </property>
    </widget>
    <widget class="QLabel" name="label_9">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>230</x>
       <y>640</y>
       <width>131</width>
       <height>21</height>
@@ -434,48 +373,8 @@ QDialogButtonBox  QPushButton
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>411</width>
-        <height>331</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="mouseTracking">
-       <bool>true</bool>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 1px solid grey;</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="lineWidth">
-       <number>1</number>
-      </property>
-      <property name="text">
-       <string>Image</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="imageLabel">
-      <property name="geometry">
-       <rect>
-        <x>430</x>
-        <y>10</y>
-        <width>411</width>
-        <height>331</height>
+        <width>841</width>
+        <height>591</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -551,6 +450,9 @@ QDialogButtonBox  QPushButton
     </property>
    </widget>
    <widget class="QLabel" name="label_6">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -564,6 +466,9 @@ QDialogButtonBox  QPushButton
     </property>
    </widget>
    <widget class="QLabel" name="xPos_label">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -590,6 +495,7 @@ QDialogButtonBox  QPushButton
     </property>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -619,6 +525,9 @@ QDialogButtonBox  QPushButton
      <string>Операции</string>
     </property>
     <widget class="QMenu" name="menu_3">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>Поворот изоображения</string>
      </property>
@@ -626,6 +535,9 @@ QDialogButtonBox  QPushButton
      <addaction name="action_TransformAngleRight"/>
     </widget>
     <widget class="QMenu" name="menu_4">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>Изменить расположение</string>
      </property>
@@ -636,12 +548,19 @@ QDialogButtonBox  QPushButton
     <addaction name="action_symmetryHorizontalTransform"/>
     <addaction name="menu_3"/>
     <addaction name="menu_4"/>
+    <addaction name="action_normalizationImage"/>
+   </widget>
+   <widget class="QMenu" name="menu_5">
+    <property name="title">
+     <string>Дополнительное</string>
+    </property>
+    <addaction name="action_equalizeHist"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
+   <addaction name="menu_5"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpenFile">
    <property name="text">
     <string>Открыть</string>
@@ -673,6 +592,9 @@ QDialogButtonBox  QPushButton
    </property>
   </action>
   <action name="action_TransformAngleLeft">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Поворот влево</string>
    </property>
@@ -698,6 +620,26 @@ QDialogButtonBox  QPushButton
    </property>
    <property name="text">
     <string>Новый файл</string>
+   </property>
+  </action>
+  <action name="action_equalizeHist">
+   <property name="text">
+    <string>Эквализация гистограммы</string>
+   </property>
+  </action>
+  <action name="action_normalizationImage">
+   <property name="text">
+    <string>Нормализировать изоображение</string>
+   </property>
+  </action>
+  <action name="undo_action">
+   <property name="text">
+    <string>Отменить</string>
+   </property>
+  </action>
+  <action name="redo_action">
+   <property name="text">
+    <string>Повторить</string>
    </property>
   </action>
  </widget>

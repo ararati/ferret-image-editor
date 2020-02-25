@@ -2,6 +2,7 @@
 #define PLOTDIALOG_H
 
 #include <QDialog>
+#include <qcustomplot.h>
 
 namespace Ui {
 class PlotDialog;
@@ -15,6 +16,7 @@ public:
     explicit PlotDialog(QWidget *parent = nullptr);
     ~PlotDialog();
 
+    QCustomPlot *getPlot();
 private:
     Ui::PlotDialog *ui;
 };
