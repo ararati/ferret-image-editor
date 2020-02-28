@@ -3,6 +3,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QMap>
+
 #include <QImage>
 #include <iostream>
 #include <QFileDialog>
@@ -26,8 +28,17 @@
 #include <ViewCompute/SymmetryTransform.h>
 #include <ViewCompute/TransformAngle.h>
 #include <ViewCompute/TransformPosition.h>
+#include <ViewCompute/MaskFilter.h>
+#include <ViewCompute/KernelFilters.h>
+
 
 #include <Windows/PlotDialog.h>
+
+#include <ViewCompute/Blur/BlurAverage.h>
+#include <ViewCompute/Blur/BlurAverage.h>
+#include <ViewCompute/Blur/BlurGaus.h>
+
+#include <ViewCompute/Noise/Noise.h>
 
 using  namespace std;
 //using namespace cv;
@@ -46,7 +57,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
-//    ui->label->setScaledContents(true);
     this->displayImage(this->processImage, ui->label);
 
     QList<QString> viewType;
@@ -68,6 +78,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label->setPixmap(QPixmap::fromImage(img));
 
     QObject::connect(plotDialog, SIGNAL(rejected()), this, SLOT(plotDialogClosed()));
+
+    QList<QString> filters;
+    filters = {"Обнулить матрицу", "Размытие", "Резкость", "Горизонтальные линии", "Собель: левая граница", "Собель: правая граница", "Собель: верхняя граница", "Собель: нижняя граница"};
+
+    foreach(QString type, filters) {
+        ui->masks_ComboBox->addItem(type);
+    }
+
+    ui->whiteNoiseCount_Slider->setMaximum(originalImage.width()*originalImage.height()/2);
+    ui->blackNoiseCount_Slider->setMaximum(originalImage.width()*originalImage.height()/2);
 }
 
 MainWindow::~MainWindow()
@@ -122,10 +142,18 @@ void MainWindow::updateHistogramEqualization() {
         x[i] = i;
     }
     QVector<double> y = HistogramEqualization::bwBrightnessData(&this->processImage);
+    QVector<double> y2 = HistogramEqualization::bwBrightnessData(&this->originalImage);
 
     double maxY = *std::max_element(y.constBegin(), y.constEnd());
+    double maxY2 = *std::max_element(y2.constBegin(), y2.constEnd());
+    maxY = max(maxY, maxY2);
 
     QCustomPlot* plot = plotDialog->getPlot();
+
+    plot->addGraph();
+    plot->graph(0)->setPen(QPen(QColor(0, 0, 255)));
+    plot->addGraph();
+    plot->graph(1)->setPen(QPen(QColor(255, 0, 0)));
 
     plot->xAxis->setLabel("brightness");
     plot->yAxis->setLabel("intensity");
@@ -135,8 +163,9 @@ void MainWindow::updateHistogramEqualization() {
 
     QCPBars *newBars = new QCPBars(plot->xAxis, plot->yAxis);
 
-    newBars->setName("Country population");
-    newBars->setData(x, y);
+    newBars->setName("Image brightness");
+    plot->graph(0)->setData(x, y);
+    plot->graph(1)->setData(x, y2);
     plot->replot();
     plot->clearPlottables();
 }
@@ -149,6 +178,7 @@ void MainWindow::saveProcessImage()
 void MainWindow::revertProcessImage()
 {
     this->processImage.copyFrom(&this->originalImage);
+    this->updateViewImage();
 }
 
 void MainWindow::displayImage(Image img, QLabel* source) {
@@ -386,12 +416,6 @@ void MainWindow::on_contrastrgb_Slider_sliderReleased()
     this->updateViewImage();
 }
 
-void MainWindow::on_binarTreshold_Slider_sliderReleased()
-{
-    this->saveProcessImage();
-    this->updateViewImage();
-}
-
 void MainWindow::on_contrastBW_okBtn_clicked()
 {
     this->saveProcessImage();
@@ -414,4 +438,161 @@ void MainWindow::on_action_normalizationImage_triggered()
 
 void MainWindow::plotDialogClosed() {
     plotDialogIsOpen = false;
+}
+
+void MainWindow::on_action_averageBlur_triggered()
+{
+//    BlurAverage::proccess(&this->originalImage, &this->processImage, 44);
+//    this->saveProcessImage();
+//    this->updateViewImage();
+}
+
+void MainWindow::on_blurGausSlider_sliderReleased()
+{
+    int value = ui->blurGausSlider->value();
+
+    if(value <= 0) {
+        this->revertProcessImage();
+        return;
+    }
+
+    BlurGaus::proccess(&this->originalImage, &this->processImage, 5);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_blurGausSlider_sliderMoved(int pos)
+{
+    this->setCommonSliderValue(pos);
+}
+
+void MainWindow::on_blurGaus_saveBtn_clicked()
+{
+    ui->blurAverage_Slider->setValue(0);
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_blurAverage_saveBtn_clicked()
+{
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_blurAverage_Slider_sliderMoved(int position)
+{
+    this->setCommonSliderValue(position);
+}
+
+void MainWindow::on_blurAverage_Slider_sliderReleased()
+{
+    int value = ui->blurAverage_Slider->value();
+
+    if(value <= 0) {
+        this->revertProcessImage();
+        return;
+    }
+
+    BlurAverage::proccess(&this->originalImage, &this->processImage, value);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_sharpMask_saveBtn_clicked()
+{
+    this->saveProcessImage();
+    this->updateViewImage();
+}
+
+void MainWindow::on_masks_ComboBox_currentTextChanged(const QString &arg1)
+{
+    double mask[3][3];
+    if(arg1 == "Собель: левая граница")
+        KernelFilters::leftSobel(mask);
+    else if(arg1 == "Размытие")
+        KernelFilters::smooth(mask);
+    else if(arg1 == "Горизонтальные линии")
+        KernelFilters::horizontalLines(mask);
+    else if(arg1 == "Резкость")
+        KernelFilters::sharpen(mask);
+    else if(arg1 == "Собель: правая граница")
+        KernelFilters::rightSobel(mask);
+    else if(arg1 == "Собель: нижняя граница")
+        KernelFilters::bottomSobel(mask);
+    else if(arg1 == "Собель: верхняя граница")
+        KernelFilters::topSobel(mask);
+    else KernelFilters::zeros(mask);;
+
+    ui->sharpMask00->setValue(mask[0][0]);
+    ui->sharpMask10->setValue(mask[1][0]);
+    ui->sharpMask20->setValue(mask[2][0]);
+
+    ui->sharpMask01->setValue(mask[0][1]);
+    ui->sharpMask11->setValue(mask[1][1]);
+    ui->sharpMask12->setValue(mask[1][2]);
+
+    ui->sharpMask02->setValue(mask[0][2]);
+    ui->sharpMask21->setValue(mask[2][1]);
+    ui->sharpMask22->setValue(mask[2][2]);
+}
+
+void MainWindow::on_blurGaus_apply_clicked()
+{
+    BlurGaus::proccess(&this->originalImage, &this->processImage, 5);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_sharpMask_applyBtn_clicked()
+{
+    float mask[3][3];
+
+    mask[0][0] = ui->sharpMask00->value();
+    mask[1][0] = ui->sharpMask10->value();
+    mask[2][0] = ui->sharpMask20->value();
+
+    mask[0][1] = ui->sharpMask01->value();
+    mask[1][1] = ui->sharpMask11->value();
+    mask[1][2] = ui->sharpMask12->value();
+
+    mask[0][2] = ui->sharpMask02->value();
+    mask[1][2] = ui->sharpMask12->value();
+    mask[2][2] = ui->sharpMask22->value();
+
+    MaskFilter::proccess(&this->originalImage, &this->processImage, mask, ui->maskFactor_SpinBox->value(), ui->maskBias_SpinBox->value());
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_rndNoise_saveBtn_clicked()
+{
+        this->saveProcessImage();
+}
+
+void MainWindow::on_whiteNoiseCount_Slider_sliderMoved(int position)
+{
+    this->revertProcessImage();
+
+    Noise::proccess(&this->originalImage, &this->processImage, position, ui->blackNoiseCount_Slider->value());
+
+    this->updateViewImage();
+
+    this->setCommonSliderValue(position);
+}
+
+void MainWindow::on_blackNoiseCount_Slider_sliderMoved(int position)
+{
+    this->revertProcessImage();
+
+    Noise::proccess(&this->originalImage, &this->processImage, ui->whiteNoiseCount_Slider->value(), position);
+
+    this->updateViewImage();
+
+    this->setCommonSliderValue(position);
+}
+
+void MainWindow::on_binarization_saveBtn_clicked()
+{
+    this->saveProcessImage();
+    this->updateViewImage();
 }

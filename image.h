@@ -29,10 +29,13 @@ class Image : public QImage
         QImage toQImage();
 //        Mat getCvImg();
 
-        void copyFrom(Image *);
+//        void copyFrom(Image *);
+        void copyFrom(QImage *);
 //        void setSvImg(Mat newImg);
         void setPath(QString path);
         bool sameSize(QImage *img);
+
+        QList<int> at(int x, int y);
 };
 
 #endif // IMAGE_H

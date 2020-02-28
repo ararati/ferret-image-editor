@@ -77,8 +77,6 @@ private slots:
 
     void on_contrastrgb_Slider_sliderReleased();
 
-    void on_binarTreshold_Slider_sliderReleased();
-
     void on_contrastBW_okBtn_clicked();
 
     void on_action_equalizeHist_triggered();
@@ -87,6 +85,36 @@ private slots:
 
     void plotDialogClosed();
 
+    void on_action_averageBlur_triggered();
+
+    void on_blurGausSlider_sliderReleased();
+
+    void on_blurGausSlider_sliderMoved(int position);
+
+    void on_blurGaus_saveBtn_clicked();
+
+    void on_blurAverage_saveBtn_clicked();
+
+    void on_blurAverage_Slider_sliderMoved(int position);
+
+    void on_blurAverage_Slider_sliderReleased();
+
+    void on_sharpMask_saveBtn_clicked();
+
+    void on_masks_ComboBox_currentTextChanged(const QString &arg1);
+
+    void on_blurGaus_apply_clicked();
+
+    void on_sharpMask_applyBtn_clicked();
+
+    void on_rndNoise_saveBtn_clicked();
+
+    void on_whiteNoiseCount_Slider_sliderMoved(int position);
+
+    void on_blackNoiseCount_Slider_sliderMoved(int position);
+
+    void on_binarization_saveBtn_clicked();
+
 signals:
 //    void plotDialogClosed();
 
@@ -94,6 +122,10 @@ private:
     Ui::MainWindow *ui;
     Image originalImage;
     Image processImage;
+
+    Image coverOriginalImage;
+    Image coverProcessImage;
+
     PlotDialog *plotDialog;
     bool plotDialogIsOpen = false;
 

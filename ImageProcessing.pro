@@ -27,16 +27,22 @@ SOURCES += \
     Helper.cpp \
     Image.cpp \
     ViewCompute/BinaryView.cpp \
+    ViewCompute/Blur/BlurAverage.cpp \
+    ViewCompute/Blur/BlurGaus.cpp \
     ViewCompute/BrightnessView.cpp \
     ViewCompute/ContrastView.cpp \
     ViewCompute/GrayscaleView.cpp \
     ViewCompute/HistogramEqualization.cpp \
+    ViewCompute/KernelFilters.cpp \
+    ViewCompute/MaskFilter.cpp \
     ViewCompute/NegativeView.cpp \
+    ViewCompute/Noise/Noise.cpp \
     ViewCompute/SingleColorView.cpp \
     ViewCompute/SymmetryTransform.cpp \
     ViewCompute/TransformAngle.cpp \
     ViewCompute/TransformPosition.cpp \
     ViewContainer.cpp \
+    Windows/CoverImageDialog.cpp \
     Windows/PlotDialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -45,22 +51,29 @@ SOURCES += \
 HEADERS += \
     Helper.h \
     ViewCompute/BinaryView.h \
+    ViewCompute/Blur/BlurAverage.h \
+    ViewCompute/Blur/BlurGaus.h \
     ViewCompute/BrightnessView.h \
     ViewCompute/ContrastView.h \
     ViewCompute/GrayscaleView.h \
     ViewCompute/HistogramEqualization.h \
+    ViewCompute/KernelFilters.h \
+    ViewCompute/MaskFilter.h \
     ViewCompute/NegativeView.h \
+    ViewCompute/Noise/Noise.h \
     ViewCompute/SingleColorView.h \
     ViewCompute/SymmetryTransform.h \
     ViewCompute/TransformAngle.h \
     ViewCompute/TransformPosition.h \
     ViewContainer.h \
+    Windows/CoverImageDialog.h \
     Windows/PlotDialog.h \
     image.h \
     mainwindow.h \
     qcustomplot.h
 
 FORMS += \
+    Windows/CoverImageDialog.ui \
     Windows/PlotDialog.ui \
     Windows/PlotWindow.ui \
     mainwindow.ui

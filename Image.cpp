@@ -29,7 +29,21 @@ bool Image::sameSize(QImage *img) {
     return (this->width() == img->width() && this->height() == img->height());
 }
 
-void Image::copyFrom(Image *img)
+QList<int> Image::at(int x, int y)
+{
+    x = (x < 0) ? 0 : x;
+    y = (y < 0) ? 0 : y;
+    QRgb px = this->pixel(x, y);
+    QList<int> rgb = QList<int>();
+//     = {qRed(px), qGreen(px), qBlue(px)}
+    rgb[0] = qRed(px);
+    rgb[1] = qGreen(px);
+    rgb[2] = qBlue(px);
+
+    return rgb;
+}
+
+void Image::copyFrom(QImage *img)
 {
     if(!sameSize(img)) {
         this->scaled(img->width(), img->height());
