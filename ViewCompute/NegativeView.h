@@ -1,5 +1,5 @@
-#ifndef NEGATIVECOMPUTE_H
-#define NEGATIVECOMPUTE_H
+#ifndef NEGATIVEVIEW_H
+#define NEGATIVEVIEW_H
 
 #include <image.h>
 
@@ -12,4 +12,4 @@ public:
     static void process(Image *originalImg, Image *processImg);
 };
 
-#endif // NEGATIVECOMPUTE_H
+#endif // NEGATIVEVIEW_H

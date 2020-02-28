@@ -1,5 +1,5 @@
-#ifndef GRAYSCALE_H
-#define GRAYSCALE_H
+#ifndef GRAYSCALEVIEW_H
+#define GRAYSCALEVIEW_H
 
 #include <image.h>
 
@@ -11,4 +11,4 @@ public:
     static void process(Image *originalImg, Image *processImg);
 };
 
-#endif // GRAYSCALE_H
+#endif // GRAYSCALEVIEW_H
