@@ -29,8 +29,10 @@ SOURCES += \
     ViewCompute/BinaryView.cpp \
     ViewCompute/Blur/BlurAverage.cpp \
     ViewCompute/Blur/BlurGaus.cpp \
+    ViewCompute/Blur/BlurMedian.cpp \
     ViewCompute/BrightnessView.cpp \
     ViewCompute/ContrastView.cpp \
+    ViewCompute/Filter.cpp \
     ViewCompute/GrayscaleView.cpp \
     ViewCompute/HistogramEqualization.cpp \
     ViewCompute/KernelFilters.cpp \
@@ -53,8 +55,10 @@ HEADERS += \
     ViewCompute/BinaryView.h \
     ViewCompute/Blur/BlurAverage.h \
     ViewCompute/Blur/BlurGaus.h \
+    ViewCompute/Blur/BlurMedian.h \
     ViewCompute/BrightnessView.h \
     ViewCompute/ContrastView.h \
+    ViewCompute/Filter.h \
     ViewCompute/GrayscaleView.h \
     ViewCompute/HistogramEqualization.h \
     ViewCompute/KernelFilters.h \
