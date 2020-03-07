@@ -37,6 +37,7 @@
 #include <ViewCompute/Blur/BlurAverage.h>
 #include <ViewCompute/Blur/BlurAverage.h>
 #include <ViewCompute/Blur/BlurGaus.h>
+#include <ViewCompute/Blur/BlurMedian.h>
 
 #include <ViewCompute/Noise/Noise.h>
 
@@ -53,11 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
     plotDialog = new PlotDialog(this);
     plotDialog->setModal(false);
 
-    QString path = ":/images/home.jpg";
+    QString path = ":/images/Lenna.png";
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
-    this->displayImage(this->processImage, ui->label);
+    originalImageWidth =  ui->label->width();
+    originalImageHeight = ui->label->height();
+
+    this->displayImage(this->processImage, ui->label, true);
 
     QList<QString> viewType;
     viewType = {"Обычное", "Негатив", "Чёрно-белое", "Одноцветное Red", "Одноцветное Green", "Одноцветное Blue"};
@@ -69,10 +73,10 @@ MainWindow::MainWindow(QWidget *parent)
     this->setMouseTracking(true);
     installEventFilter(this);
 
-    QImage img(":/images/home.jpg");
+    QImage img(":/images/Lenna.png");
 
     if(img.width() > ui->label->width() || img.height() > ui->label->height()) {
-        img = img.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio);
+        img = img.scaled(ui->label->width()*zoomFactor, ui->label->height()*zoomFactor, Qt::KeepAspectRatio);
     }
 
     ui->label->setPixmap(QPixmap::fromImage(img));
@@ -88,6 +92,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->whiteNoiseCount_Slider->setMaximum(originalImage.width()*originalImage.height()/2);
     ui->blackNoiseCount_Slider->setMaximum(originalImage.width()*originalImage.height()/2);
+
+    imageViewWidth = ui->label->geometry().width();
+    imageViewHeight = ui->label->geometry().height();
+
+//    ui->scrollArea->setWidgetResizable(true);
+//    ui->scrollArea->takeWidget();
+//    ui->scrollArea->setWidget(ui->widget_2);
+
+    ui->binarTresholdRed_Slider->setStyleSheet("QSlider::handle:horizontal { border: 1px solid #777; background:#ff0000;}");
+    ui->binarTresholdGreen_Slider->setStyleSheet("QSlider::handle:horizontal { border: 1px solid #777; background:#00ff00;}");
+    ui->binarTresholdBlue_Slider->setStyleSheet("QSlider::handle:horizontal { border: 1px solid #777; background:#0000ff;}");
 }
 
 MainWindow::~MainWindow()
@@ -99,18 +114,27 @@ void MainWindow::loadImageByPath(QString path) {
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
-    this->updateViewImage();
+    zoomFactor = 1;
+
+    this->updateViewImage(true);
+
+    clearRedoUndoActions();
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
+//    scrollX++;
   if (event->type() == QEvent::MouseMove)
   {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
-    int x =  mouseEvent->pos().x();
-    int y =  mouseEvent->pos().y();
+    if(mouseEvent->pos().x() < ui->label->geometry().x() || mouseEvent->pos().y() < ui->label->geometry().y())
+        return false;
+    int x =   mouseEvent->pos().x();
+    int y =   mouseEvent->pos().y();
 
-    this->updateRgbStatus(x, y);
+    ui->xPos_label->setText(QString::number(x));
+    ui->yPos_label->setText(QString::number(y));
+//    this->updateRgbStatus(x, y);
     //statusBar()->showMessage(QString("Mouse move (%1,%2)").arg(mouseEvent->pos().x()).arg(mouseEvent->pos().y()));
   };
   return false;
@@ -128,9 +152,9 @@ void MainWindow::updateRgbStatus(int x, int y) {
 //    ui->yPos_label->setText(QString::number(y));
 }
 
-void MainWindow::updateViewImage()
+void MainWindow::updateViewImage(bool updateGeometry)
 {
-    this->displayImage(this->processImage, ui->label);
+    this->displayImage(this->processImage, ui->label, updateGeometry);
 
     if(plotDialogIsOpen)
         this->updateHistogramEqualization();
@@ -150,10 +174,13 @@ void MainWindow::updateHistogramEqualization() {
 
     QCustomPlot* plot = plotDialog->getPlot();
 
+    plot->legend->setVisible(true);
     plot->addGraph();
     plot->graph(0)->setPen(QPen(QColor(0, 0, 255)));
+    plot->graph(0)->setName("Обрабатываемое");
     plot->addGraph();
     plot->graph(1)->setPen(QPen(QColor(255, 0, 0)));
+    plot->graph(1)->setName("Сохраненное");
 
     plot->xAxis->setLabel("brightness");
     plot->yAxis->setLabel("intensity");
@@ -161,9 +188,6 @@ void MainWindow::updateHistogramEqualization() {
     plot->xAxis->setRange(0, 255);
     plot->yAxis->setRange(0, maxY);
 
-    QCPBars *newBars = new QCPBars(plot->xAxis, plot->yAxis);
-
-    newBars->setName("Image brightness");
     plot->graph(0)->setData(x, y);
     plot->graph(1)->setData(x, y2);
     plot->replot();
@@ -172,7 +196,11 @@ void MainWindow::updateHistogramEqualization() {
 
 void MainWindow::saveProcessImage()
 {
+    pastActions.push(this->originalImage);
     this->originalImage.copyFrom(&this->processImage);
+
+    ui->btn_back_action->setDisabled(pastActions.count() == 0);
+    ui->btn_redo_action->setDisabled(redoActions.count() == 0);
 }
 
 void MainWindow::revertProcessImage()
@@ -181,14 +209,19 @@ void MainWindow::revertProcessImage()
     this->updateViewImage();
 }
 
-void MainWindow::displayImage(Image img, QLabel* source) {
-    QPixmap qImg = QPixmap::fromImage(img);
+void MainWindow::displayImage(Image img, QLabel* source, bool scaling) {
+    viewImage = QPixmap::fromImage(img);
 
-    if(img.width() > source->width() || img.height() > source->height()) {
-        qImg = qImg.scaled(source->width(), source->height(), Qt::KeepAspectRatio);
+//    if(img.width() > source->width() || img.height() > source->height()) {
+    if(scaling ) {
+        if(zoomFactor > 1 || (img.width() > originalImageWidth || img.height() > originalImageWidth)) {
+            viewImage = viewImage.scaled(originalImageWidth*zoomFactor, originalImageWidth*zoomFactor, Qt::KeepAspectRatio);
+        }
     }
+//    viewImage.scroll(scrollX, 0, viewImage.rect());
+    //    }
 
-    source->setPixmap(qImg);
+    source->setPixmap(viewImage);
 }
 
 void MainWindow::processViewType(QString type) {
@@ -388,10 +421,10 @@ void MainWindow::on_action_TransformAngleRight_triggered()
 }
 
 void MainWindow::addImageTab(QString name) {
-    QWidget *newTab = new QWidget(ui->imagesTabs);
-    QLabel* imgLabel = new QLabel("abc", newTab);
-    imgLabel->show();
-    ui->imagesTabs->addTab(newTab, name);
+//    QWidget *newTab = new QWidget(ui->imagesTabs);
+//    QLabel* imgLabel = new QLabel("abc", newTab);
+//    imgLabel->show();
+//    ui->imagesTabs->addTab(newTab, name);
 }
 
 void MainWindow::on_actionNewFile_triggered()
@@ -406,14 +439,14 @@ void MainWindow::on_imagesTabs_currentChanged(int index)
 
 void MainWindow::on_brightnessSlider_sliderReleased()
 {
-    this->saveProcessImage();
-    this->updateViewImage();
+//    this->saveProcessImage();
+//    this->updateViewImage();
 }
 
 void MainWindow::on_contrastrgb_Slider_sliderReleased()
 {
-    this->saveProcessImage();
-    this->updateViewImage();
+//    this->saveProcessImage();
+//    this->updateViewImage();
 }
 
 void MainWindow::on_contrastBW_okBtn_clicked()
@@ -449,16 +482,16 @@ void MainWindow::on_action_averageBlur_triggered()
 
 void MainWindow::on_blurGausSlider_sliderReleased()
 {
-    int value = ui->blurGausSlider->value();
+//    int value = ui->blurGausSlider->value();
 
-    if(value <= 0) {
-        this->revertProcessImage();
-        return;
-    }
+//    if(value <= 0) {
+//        this->revertProcessImage();
+//        return;
+//    }
 
-    BlurGaus::proccess(&this->originalImage, &this->processImage, 5);
+//    BlurGaus::proccess(&this->originalImage, &this->processImage, 5);
 
-    this->updateViewImage();
+//    this->updateViewImage();
 }
 
 void MainWindow::on_blurGausSlider_sliderMoved(int pos)
@@ -595,4 +628,146 @@ void MainWindow::on_binarization_saveBtn_clicked()
 {
     this->saveProcessImage();
     this->updateViewImage();
+}
+
+void MainWindow::on_commandLinkButton_medianSquare_clicked()
+{
+    BlurMedian::square(&this->originalImage, &this->processImage);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_bioNoiseCount_Slider_sliderMoved(int position)
+{
+    this->revertProcessImage();
+
+    Noise::bipolar(&this->originalImage, &this->processImage, position);
+
+    this->updateViewImage();
+
+    this->setCommonSliderValue(position);
+}
+
+void MainWindow::on_commandLinkButton_medianSquare_2_clicked()
+{
+    BlurMedian::adaptiveSquare(&this->originalImage, &this->processImage, 3);
+
+    this->updateViewImage();
+}
+
+void MainWindow::clearRedoUndoActions() {
+    redoActions.clear();
+    pastActions.clear();
+    ui->btn_back_action->setDisabled(pastActions.count() == 0);
+    ui->btn_redo_action->setDisabled(redoActions.count() == 0);
+}
+
+void MainWindow::on_btn_back_action_clicked()
+{
+    redoActions.clear();
+    redoActions.push(this->originalImage);
+
+    QImage img = pastActions.pop();
+
+    this->processImage.copyFrom(&img);
+    this->originalImage.copyFrom(&this->processImage);
+    this->updateViewImage();
+
+    ui->btn_back_action->setDisabled(pastActions.count() == 0);
+    ui->btn_redo_action->setDisabled(redoActions.count() == 0);
+}
+
+void MainWindow::on_btn_redo_action_clicked()
+{
+    QImage img = redoActions.pop();
+
+    pastActions.push(this->originalImage);
+    this->processImage.copyFrom(&img);
+    this->originalImage.copyFrom(&this->processImage);
+    this->updateViewImage();
+
+    ui->btn_back_action->setDisabled(pastActions.count() == 0);
+    ui->btn_redo_action->setDisabled(redoActions.count() == 0);
+}
+
+void MainWindow::on_commandLinkButton_clicked()
+{
+    if(zoomFactor < 7) {
+        zoomFactor *= 1.5;
+        this->updateViewImage(true);
+    }
+    qInfo() << zoomFactor;
+
+    ui->commandLinkButton->setDisabled(zoomFactor >= 7);
+    ui->btn_zoom_out->setDisabled(zoomFactor == 1);
+//    ui->label->setScaledContents(true);
+//    ui->label->setGeometry(ui->label->geometry().x(), ui->label->geometry().y(), imageViewWidth*zoomFactor, imageViewHeight*zoomFactor);
+}
+
+void MainWindow::on_btn_zoom_out_clicked()
+{
+    zoomFactor = (zoomFactor*0.5 <= 1) ? 1 : zoomFactor * 0.5;
+    this->updateViewImage(true);
+    qInfo() << zoomFactor;
+    ui->btn_zoom_out->setDisabled(zoomFactor == 1);
+    ui->commandLinkButton->setDisabled(zoomFactor >= 7);
+}
+
+void MainWindow::on_btn_revert_processImage_clicked()
+{
+    this->revertProcessImage();
+}
+
+void MainWindow::on_btn_medianCross_clicked()
+{
+    BlurMedian::cross(&this->originalImage, &this->processImage);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_btn_adaptiveMedianCross_clicked()
+{
+    BlurMedian::adaptiveCross(&this->originalImage, &this->processImage);
+
+    this->updateViewImage();
+}
+
+void MainWindow::processColorBinary(int rPos, int gPos, int bPos) {
+    BinaryView::binaryColor(&this->originalImage, &this->processImage, rPos, gPos, bPos);
+}
+
+void MainWindow::on_binarTresholdRed_Slider_sliderMoved(int position)
+{
+    processColorBinary(
+                ui->binarTresholdRed_Slider->value(),
+                ui->binarTresholdGreen_Slider->value(),
+                ui->binarTresholdBlue_Slider->value());
+
+    this->updateViewImage();
+
+    this->setCommonSliderValue(position);
+}
+
+void MainWindow::on_binarTresholdGreen_Slider_sliderMoved(int position)
+{
+    processColorBinary(
+                ui->binarTresholdRed_Slider->value(),
+                ui->binarTresholdGreen_Slider->value(),
+                ui->binarTresholdBlue_Slider->value());
+
+    this->updateViewImage();
+
+    this->setCommonSliderValue(position);
+}
+
+void MainWindow::on_binarTresholdBlue_Slider_sliderMoved(int position)
+{
+    processColorBinary(
+                ui->binarTresholdRed_Slider->value(),
+                ui->binarTresholdGreen_Slider->value(),
+                ui->binarTresholdBlue_Slider->value());
+
+    this->updateViewImage();
+
+    this->setCommonSliderValue(position);
 }

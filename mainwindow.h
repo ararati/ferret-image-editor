@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void updateViewImage();
+    void updateViewImage(bool updateGeometry=true);
 
     virtual bool eventFilter(QObject *obj, QEvent *event) override;
     void updateRgbStatus(int x, int y);
@@ -28,6 +28,9 @@ public:
     void setCommonSliderValue(int val);
     void updateHistogramEqualization();
 
+    void displayImage(Image img, QLabel *source, bool scaling = false);
+    void clearRedoUndoActions();
+    void processColorBinary(int rPos, int gPos, int bPos);
 private slots:
 
     void on_brightnessSlider_valueChanged(int value);
@@ -115,6 +118,32 @@ private slots:
 
     void on_binarization_saveBtn_clicked();
 
+    void on_commandLinkButton_medianSquare_clicked();
+
+    void on_bioNoiseCount_Slider_sliderMoved(int position);
+
+    void on_commandLinkButton_medianSquare_2_clicked();
+
+    void on_btn_back_action_clicked();
+
+    void on_btn_redo_action_clicked();
+
+    void on_commandLinkButton_clicked();
+
+    void on_btn_zoom_out_clicked();
+
+    void on_btn_revert_processImage_clicked();
+
+    void on_btn_medianCross_clicked();
+
+    void on_btn_adaptiveMedianCross_clicked();
+
+    void on_binarTresholdRed_Slider_sliderMoved(int position);
+
+    void on_binarTresholdGreen_Slider_sliderMoved(int position);
+
+    void on_binarTresholdBlue_Slider_sliderMoved(int position);
+
 signals:
 //    void plotDialogClosed();
 
@@ -128,8 +157,16 @@ private:
 
     PlotDialog *plotDialog;
     bool plotDialogIsOpen = false;
+    QStack<QImage> pastActions;
+    QStack<QImage> redoActions;
+    QPixmap viewImage;
+    int originalImageWidth;
+    int originalImageHeight;
+    int imageViewWidth;
+    int imageViewHeight;
+    int scrollX = 0;
+    float zoomFactor = 1;
 
-    void displayImage(Image img, QLabel* source);
     void contrastInputChanged();
     void processViewType(QString type);
     void loadImageByPath(QString path);
