@@ -4,5 +4,6 @@
         <file>images/home.jpg</file>
         <file>images/icon-save.png</file>
         <file>images/s_icon.png</file>
+        <file>images/Lenna.png</file>
     </qresource>
 </RCC>
