@@ -40,6 +40,7 @@
 #include <ViewCompute/Blur/BlurMedian.h>
 
 #include <ViewCompute/Noise/Noise.h>
+#include <ViewCompute/ArithmeticOperations.h>
 
 using  namespace std;
 //using namespace cv;
@@ -103,6 +104,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->binarTresholdRed_Slider->setStyleSheet("QSlider::handle:horizontal { border: 1px solid #777; background:#ff0000;}");
     ui->binarTresholdGreen_Slider->setStyleSheet("QSlider::handle:horizontal { border: 1px solid #777; background:#00ff00;}");
     ui->binarTresholdBlue_Slider->setStyleSheet("QSlider::handle:horizontal { border: 1px solid #777; background:#0000ff;}");
+
+
+
+
+    QList<QString> arithmeticOperations;
+    arithmeticOperations = {"Сумма", "Разность", "Умножение", "Среднее", "Мин", "Макс", "OR", "AND", "XOR"};
+
+    foreach(QString op, arithmeticOperations) {
+        ui->arithmeticOperations_comboBox->addItem(op);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -299,7 +310,7 @@ void MainWindow::on_viewType_btn_clicked()
 
 void MainWindow::openFile()
 {
-    QString path = QFileDialog::getOpenFileName(0, "Choose file", "", "*.png *.jpg *.jpeg *.bmp");
+    QString path = imageFileDialog();
 
     if(path == "") return;
 
@@ -578,7 +589,9 @@ void MainWindow::on_blurGaus_apply_clicked()
 
 void MainWindow::on_sharpMask_applyBtn_clicked()
 {
-    float mask[3][3];
+    int maskSize = (ui->radioButton_mask3x3->isChecked()) ? 3 : 5;
+
+    float mask[31][31];
 
     mask[0][0] = ui->sharpMask00->value();
     mask[1][0] = ui->sharpMask10->value();
@@ -592,7 +605,30 @@ void MainWindow::on_sharpMask_applyBtn_clicked()
     mask[1][2] = ui->sharpMask12->value();
     mask[2][2] = ui->sharpMask22->value();
 
-    MaskFilter::proccess(&this->originalImage, &this->processImage, mask, ui->maskFactor_SpinBox->value(), ui->maskBias_SpinBox->value());
+    if(maskSize == 5) {
+        mask[0][3] = ui->sharpMask03->value();
+        mask[0][4] = ui->sharpMask04->value();
+
+        mask[1][3] = ui->sharpMask13->value();
+        mask[1][4] = ui->sharpMask14->value();
+
+        mask[2][3] = ui->sharpMask23->value();
+        mask[2][4] = ui->sharpMask24->value();
+
+        mask[3][0] = ui->sharpMask30->value();
+        mask[3][1] = ui->sharpMask31->value();
+        mask[3][2] = ui->sharpMask32->value();
+        mask[3][3] = ui->sharpMask33->value();
+        mask[3][4] = ui->sharpMask34->value();
+
+        mask[4][0] = ui->sharpMask40->value();
+        mask[4][1] = ui->sharpMask41->value();
+        mask[4][2] = ui->sharpMask42->value();
+        mask[4][3] = ui->sharpMask43->value();
+        mask[4][4] = ui->sharpMask44->value();
+    }
+
+    MaskFilter::proccess(&this->originalImage, &this->processImage, maskSize, mask, ui->maskFactor_SpinBox->value(), ui->maskBias_SpinBox->value());
 
     this->updateViewImage();
 }
@@ -770,4 +806,122 @@ void MainWindow::on_binarTresholdBlue_Slider_sliderMoved(int position)
     this->updateViewImage();
 
     this->setCommonSliderValue(position);
+}
+
+void MainWindow::toggleMask5x5() {
+    ui->sharpMask03->setEnabled(!ui->sharpMask03->isEnabled());
+    ui->sharpMask04->setEnabled(!ui->sharpMask04->isEnabled());
+
+    ui->sharpMask13->setEnabled(!ui->sharpMask13->isEnabled());
+    ui->sharpMask14->setEnabled(!ui->sharpMask14->isEnabled());
+
+    ui->sharpMask23->setEnabled(!ui->sharpMask23->isEnabled());
+    ui->sharpMask24->setEnabled(!ui->sharpMask24->isEnabled());
+
+    ui->sharpMask30->setEnabled(!ui->sharpMask30->isEnabled());
+    ui->sharpMask31->setEnabled(!ui->sharpMask31->isEnabled());
+    ui->sharpMask32->setEnabled(!ui->sharpMask32->isEnabled());
+    ui->sharpMask33->setEnabled(!ui->sharpMask33->isEnabled());
+    ui->sharpMask34->setEnabled(!ui->sharpMask34->isEnabled());
+
+    ui->sharpMask40->setEnabled(!ui->sharpMask40->isEnabled());
+    ui->sharpMask41->setEnabled(!ui->sharpMask41->isEnabled());
+    ui->sharpMask42->setEnabled(!ui->sharpMask42->isEnabled());
+    ui->sharpMask43->setEnabled(!ui->sharpMask43->isEnabled());
+    ui->sharpMask44->setEnabled(!ui->sharpMask44->isEnabled());
+}
+
+void MainWindow::on_radioButton_mask5x5_clicked()
+{
+    toggleMask5x5();
+}
+
+void MainWindow::on_radioButton_mask3x3_clicked()
+{
+    toggleMask5x5();
+}
+
+void MainWindow::on_horizontalSlider_speedBlur_sliderReleased()
+{
+    int size = ui->horizontalSlider_speedBlur->value();
+    float mask[31][31];
+
+    for(int i = 0; i < size; i++)
+        for(int j = 0; j < size; j++)
+            mask[i][j] = 0;
+
+    double k = 1.0f/size;
+    for(int i = 0; i < size; i++)
+        for(int j = 0; j < size; j++) {
+            if(i == j)
+                mask[i][j] = k;
+        }
+
+
+    MaskFilter::proccess(&this->originalImage, &this->processImage, size, mask, ui->maskFactor_SpinBox->value(), ui->maskBias_SpinBox->value());
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_horizontalSlider_speedBlur_valueChanged(int value)
+{
+     setCommonSliderValue(value);
+}
+
+QString MainWindow::imageFileDialog() {
+    QString path = QFileDialog::getOpenFileName(0, "Choose file", "", "*.png *.jpg *.jpeg *.bmp");
+
+    return path;
+}
+
+void MainWindow::on_arithmeticImgLoad_pushButton_clicked()
+{
+    this->revertProcessImage();
+
+    QString path = imageFileDialog();
+    if(path == "") return;
+
+    //TODO: For refactoring
+    if(ui->aritmeticImgSize_checkBox->isChecked()) {
+        arithmeticImage = Image(originalImage);
+        QImage img = QImage(path);
+        img = img.scaled(originalImage.width(), originalImage.height());
+        arithmeticImage.copyFrom(&img);
+    } else arithmeticImage = Image(path);
+
+    QPixmap pix = QPixmap::fromImage(arithmeticImage).scaled(ui->arithmeticImg_label->width(),ui->arithmeticImg_label->height(),Qt::KeepAspectRatio);
+
+    ui->arithmeticImg_label->setPixmap(pix);
+
+    processArithmeticOperation(ui->arithmeticOperations_comboBox->currentText());
+
+    this->updateViewImage();
+}
+
+void MainWindow::processArithmeticOperation(QString arg1) {
+    if(arg1 == "Сумма")
+        ArithmeticOperations::sum(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "Разность")
+        ArithmeticOperations::diff(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "Умножение")
+        ArithmeticOperations::mul(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "Среднее")
+        ArithmeticOperations::average(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "Мин")
+        ArithmeticOperations::min(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "Макс")
+        ArithmeticOperations::max(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "OR")
+        ArithmeticOperations::OR(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "AND")
+        ArithmeticOperations::AND(&this->originalImage, &this->processImage, &this->arithmeticImage);
+    else if(arg1 == "XOR")
+        ArithmeticOperations::XOR(&this->originalImage, &this->processImage, &this->arithmeticImage);
+}
+
+void MainWindow::on_arithmeticOperations_comboBox_currentTextChanged(const QString &arg1)
+{
+    processArithmeticOperation(arg1);
+
+    this->updateViewImage();
 }

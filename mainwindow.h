@@ -31,6 +31,9 @@ public:
     void displayImage(Image img, QLabel *source, bool scaling = false);
     void clearRedoUndoActions();
     void processColorBinary(int rPos, int gPos, int bPos);
+    void toggleMask5x5();
+    QString imageFileDialog();
+    void processArithmeticOperation(QString arg1);
 private slots:
 
     void on_brightnessSlider_valueChanged(int value);
@@ -144,6 +147,19 @@ private slots:
 
     void on_binarTresholdBlue_Slider_sliderMoved(int position);
 
+    void on_radioButton_mask5x5_clicked();
+
+    void on_radioButton_mask3x3_clicked();
+
+    void on_horizontalSlider_speedBlur_sliderReleased();
+
+
+    void on_horizontalSlider_speedBlur_valueChanged(int value);
+
+    void on_arithmeticImgLoad_pushButton_clicked();
+
+    void on_arithmeticOperations_comboBox_currentTextChanged(const QString &arg1);
+
 signals:
 //    void plotDialogClosed();
 
@@ -154,6 +170,7 @@ private:
 
     Image coverOriginalImage;
     Image coverProcessImage;
+    Image arithmeticImage;
 
     PlotDialog *plotDialog;
     bool plotDialogIsOpen = false;
