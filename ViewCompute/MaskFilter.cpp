@@ -1,30 +1,37 @@
 #include "MaskFilter.h"
 #include <cstdlib>
+#include <QtDebug>
 
-void MaskFilter::proccess(Image *original, Image *processing, float mask[3][3], double factor, double bias)
+void MaskFilter::proccess(Image *original, Image *processing, int maskSize, float mask[31][31], double factor, double bias)
 {
-    int maskSize = 3;
+    int maskMeed = maskSize/2, tx = 0, ty = 0;
+    qInfo() << maskMeed;
     int height = processing->height(), width = processing->width();
     uint maskCeils = maskSize*maskSize;
     QRgb tmpPx;
 
-    float tRed, tGreen, tBlue, maskMeed = 1, tmpMaskSize;
-    for(int x = 1; x < width-1; x++)
+    //Необрабатываем рамки
+    float tRed, tGreen, tBlue, tmpMaskSize;
+    for(int x = 0; x < width; x++)
     {
-        for(int y = 1; y < height-1; y++)
+        tx = (x == 0) ? maskMeed : (x == width-1) ? -maskMeed : 0;
+        for(int y = 0; y < height; y++)
         {
             tRed = 0; tGreen = 0; tBlue = 0;
             tmpMaskSize = maskCeils;
+            ty = (y == 0) ? maskMeed : (y == height-1) ? -maskMeed : 0;
             for(int r = 0; r < maskSize; r++)
             {
                 for(int k = 0; k < maskSize; k++)
                 {
+
                     if(x-(maskMeed-k) < 0 || y-(maskMeed-r) < 0 || y-(maskMeed-r) >= height || x-(maskMeed-k) >= width) {
                         tmpMaskSize--;
                         continue;
                     }
 
-                    tmpPx = original->pixel(x-(1-r), y-(1-k));
+                    tx = ty = 0;
+                    tmpPx = original->pixel(x-(maskMeed-k)+tx, y-(maskMeed-r)+ty);
                     tRed +=    mask[k][r] * qRed(tmpPx);
                     tGreen +=   mask[k][r] * qGreen(tmpPx);
                     tBlue +=   mask[k][r] * qBlue(tmpPx);

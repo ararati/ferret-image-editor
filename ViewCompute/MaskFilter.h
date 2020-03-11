@@ -8,7 +8,7 @@
 class MaskFilter
 {
 public:
-    static void proccess(Image *original, Image *processed, float mask[3][3], double factor, double bias);
+    static void proccess(Image *original, Image *processed, int maskSize, float mask[31][31], double factor, double bias);
 };
 
 #endif // MASKFILTER_H
