@@ -26,6 +26,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     Helper.cpp \
     Image.cpp \
+    ViewCompute/ArithmeticOperations.cpp \
     ViewCompute/BinaryView.cpp \
     ViewCompute/Blur/BlurAverage.cpp \
     ViewCompute/Blur/BlurGaus.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
 
 HEADERS += \
     Helper.h \
+    ViewCompute/ArithmeticOperations.h \
     ViewCompute/BinaryView.h \
     ViewCompute/Blur/BlurAverage.h \
     ViewCompute/Blur/BlurGaus.h \
