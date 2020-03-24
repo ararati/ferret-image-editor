@@ -16,6 +16,8 @@ public:
     static void OR(Image* original, Image* processing, Image* image);
     static void AND(Image* original, Image* processing, Image* image);
     static void XOR(Image* original, Image* processing, Image* image);
+    static void dilate(Image* original, Image* processing);
+    static void erosion(Image* original, Image* processing);
 
 };
 

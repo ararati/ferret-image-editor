@@ -147,3 +147,43 @@ void ArithmeticOperations::XOR(Image *original, Image *processing, Image *image2
                                  );
         }
 }
+
+void ArithmeticOperations::dilate(Image *original, Image *processing)
+{
+    uint height = processing->height(), width = processing->width(), r, g, b;
+    for(int x = 2; x < width-2; x++)
+    {
+        for(int y = 2; y < height-2; y++)
+        {
+            for(int i = 0; i < 5; i++) {
+                for(int j = 0; j < 5; j++) {
+                    QRgb px = original->pixel(x-(2-i), y-(2-j));
+                    if(qRed(px) == 0) {
+                        processing->setPixel(x, y, qRgb(0, 0, 0));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void ArithmeticOperations::erosion(Image *original, Image *processing)
+{
+    uint height = processing->height(), width = processing->width(), r, g, b;
+    for(int x = 2; x < width-2; x++)
+    {
+        for(int y = 2; y < height-2; y++)
+        {
+            for(int i = 0; i < 5; i++) {
+                for(int j = 0; j < 5; j++) {
+                    QRgb px = original->pixel(x-(2-i), y-(2-j));
+                    if(qRed(px) > 0) {
+                        processing->setPixel(x, y, qRgb(255, 255, 255));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
