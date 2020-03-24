@@ -160,6 +160,10 @@ private slots:
 
     void on_arithmeticOperations_comboBox_currentTextChanged(const QString &arg1);
 
+    void on_commandLinkButton_dilate_clicked();
+
+    void on_commandLinkButton_erosion_clicked();
+
 signals:
 //    void plotDialogClosed();
 

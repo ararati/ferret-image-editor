@@ -114,6 +114,21 @@ MainWindow::MainWindow(QWidget *parent)
     foreach(QString op, arithmeticOperations) {
         ui->arithmeticOperations_comboBox->addItem(op);
     }
+
+//    int i = 50, j = 15;
+//    QRgb px = this->originalImage.pixel(i, j);
+//    QMessageBox infoBox;
+//    QString info = QString("Pixel on (50, 15) has color: \n"
+//                           "R: %1\n"
+//                           "G: %2\n"
+//                           "B: %3\n"
+//                           "").arg(
+//                                QString::number(qRed(px)),
+//                                QString::number(qGreen(px)),
+//                                QString::number(qBlue(px))
+//                                );
+//    infoBox.setText(info);
+//    infoBox.exec();
 }
 
 MainWindow::~MainWindow()
@@ -203,6 +218,8 @@ void MainWindow::updateHistogramEqualization() {
     plot->graph(1)->setData(x, y2);
     plot->replot();
     plot->clearPlottables();
+
+
 }
 
 void MainWindow::saveProcessImage()
@@ -355,16 +372,10 @@ void MainWindow::on_actionInfoImage_triggered()
                            "Image path: %1\n"
                            "Width: %2\n"
                            "Height: %3\n\n"
-
-                           "Channels: %4\n"
-                           "Depth: %5\n"
                            "").arg(
                                 this->processImage.path(),
                                 QString::number(this->processImage.width()),
                                 QString::number(this->processImage.height())
-
-//                                QString::number(this->processImage.getCvImg().channels()),
-//                                QString::number(this->processImage.getCvImg().depth())
                                 );
     infoBox.setText(info);
     infoBox.exec();
@@ -476,7 +487,7 @@ void MainWindow::on_action_equalizeHist_triggered()
 void MainWindow::on_action_normalizationImage_triggered()
 {
     HistogramEqualization::bwNormalization(&this->processImage);
-    this->saveProcessImage();
+//    this->saveProcessImage();
     this->updateViewImage();
 }
 
@@ -922,6 +933,20 @@ void MainWindow::processArithmeticOperation(QString arg1) {
 void MainWindow::on_arithmeticOperations_comboBox_currentTextChanged(const QString &arg1)
 {
     processArithmeticOperation(arg1);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_commandLinkButton_dilate_clicked()
+{
+    ArithmeticOperations::dilate(&this->originalImage, &this->processImage);
+
+    this->updateViewImage();
+}
+
+void MainWindow::on_commandLinkButton_erosion_clicked()
+{
+    ArithmeticOperations::erosion(&this->originalImage, &this->processImage);
 
     this->updateViewImage();
 }
