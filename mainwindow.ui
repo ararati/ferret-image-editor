@@ -80,7 +80,7 @@ QDialogButtonBox  QPushButton
      <enum>QTabWidget::Triangular</enum>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>1</number>
     </property>
     <property name="elideMode">
      <enum>Qt::ElideNone</enum>
@@ -99,7 +99,7 @@ QDialogButtonBox  QPushButton
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Основное</string>
+      <string>Main</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
@@ -111,7 +111,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Яркость</string>
+       <string>Brightness</string>
       </property>
       <widget class="QSlider" name="brightnessSlider">
        <property name="geometry">
@@ -143,7 +143,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Контраст цветной</string>
+       <string>Contrast</string>
       </property>
       <widget class="QSlider" name="contrastrgb_Slider">
        <property name="geometry">
@@ -175,7 +175,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Контраст чёрно-белый</string>
+       <string>Black and white contrast</string>
       </property>
       <widget class="QSpinBox" name="contrastMin_spinBox">
        <property name="geometry">
@@ -233,39 +233,20 @@ QDialogButtonBox  QPushButton
        </property>
       </widget>
      </widget>
-     <widget class="QGroupBox" name="groupBox_3">
+     <widget class="EffectsWidget" name="effectsWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>190</y>
-        <width>241</width>
-        <height>51</height>
+        <x>0</x>
+        <y>200</y>
+        <width>261</width>
+        <height>71</height>
        </rect>
       </property>
-      <property name="title">
-       <string>Отображение</string>
-      </property>
-      <widget class="QComboBox" name="viewTypeComboBox">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>221</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <property name="modelColumn">
-        <number>0</number>
-       </property>
-      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Размытие</string>
+      <string>Blur</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
@@ -277,7 +258,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Размытие по Гауссу</string>
+       <string>Gauss method</string>
       </property>
       <widget class="QSlider" name="blurGausSlider">
        <property name="enabled">
@@ -328,7 +309,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Среднее</string>
+       <string>Average method</string>
       </property>
       <widget class="QSlider" name="blurAverage_Slider">
        <property name="geometry">
@@ -363,7 +344,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Устранение шума</string>
+       <string>Remove noise</string>
       </property>
       <widget class="QCommandLinkButton" name="commandLinkButton_medianSquare">
        <property name="geometry">
@@ -375,7 +356,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Медианный фильтр: Квадрат</string>
+        <string>Median Filter: Square</string>
        </property>
       </widget>
       <widget class="QCommandLinkButton" name="commandLinkButton_medianSquare_2">
@@ -388,7 +369,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Адаптивный мед. фильтр: Квадрат</string>
+        <string>Adaptive median Filter: Square</string>
        </property>
        <property name="autoRepeat">
         <bool>false</bool>
@@ -410,7 +391,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Медианный фильтр: Крест</string>
+        <string>Median Filter: Cross</string>
        </property>
       </widget>
       <widget class="QCommandLinkButton" name="btn_adaptiveMedianCross">
@@ -423,7 +404,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Адаптивный мед. фильтр: Крест</string>
+        <string>Adaptive median Filter: Cross</string>
        </property>
        <property name="autoRepeat">
         <bool>false</bool>
@@ -442,11 +423,11 @@ QDialogButtonBox  QPushButton
         <x>10</x>
         <y>330</y>
         <width>241</width>
-        <height>71</height>
+        <height>51</height>
        </rect>
       </property>
       <property name="title">
-       <string>Эффект форсажа</string>
+       <string>Directional blur</string>
       </property>
       <widget class="QSlider" name="horizontalSlider_speedBlur">
        <property name="geometry">
@@ -480,7 +461,7 @@ QDialogButtonBox  QPushButton
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
-      <string>Бинаризация</string>
+      <string>Binarization</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
@@ -492,14 +473,14 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Порог черно-белого </string>
+       <string>Black-white (color &lt; slider : Black else White)</string>
       </property>
       <widget class="QSlider" name="binarTreshold_Slider">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>30</x>
          <y>20</y>
-         <width>221</width>
+         <width>181</width>
          <height>22</height>
         </rect>
        </property>
@@ -516,6 +497,38 @@ QDialogButtonBox  QPushButton
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>16</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: black</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>20</y>
+         <width>16</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: white; border: 1px solid grey;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_12">
       <property name="geometry">
@@ -527,7 +540,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Порог цветного (s &lt; i: 0 ; 255)</string>
+       <string>Color binarization</string>
       </property>
       <widget class="QSlider" name="binarTresholdRed_Slider">
        <property name="geometry">
@@ -650,1706 +663,22 @@ QDialogButtonBox  QPushButton
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>Метод свёртки</string>
+      <string>Kernel manipulation</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_9">
+     <widget class="KernelWidget" name="kernelWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>241</width>
-        <height>291</height>
+        <x>0</x>
+        <y>0</y>
+        <width>261</width>
+        <height>641</height>
        </rect>
       </property>
-      <property name="title">
-       <string>Маска фильтра</string>
-      </property>
-      <widget class="QToolButton" name="sharpMask_applyBtn">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>260</y>
-         <width>41</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>✔</string>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask00">
-       <property name="geometry">
-        <rect>
-         <x>8</x>
-         <y>80</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask01">
-       <property name="geometry">
-        <rect>
-         <x>42</x>
-         <y>80</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask02">
-       <property name="geometry">
-        <rect>
-         <x>76</x>
-         <y>80</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask12">
-       <property name="geometry">
-        <rect>
-         <x>76</x>
-         <y>110</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask11">
-       <property name="geometry">
-        <rect>
-         <x>42</x>
-         <y>110</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask10">
-       <property name="geometry">
-        <rect>
-         <x>8</x>
-         <y>110</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask22">
-       <property name="geometry">
-        <rect>
-         <x>76</x>
-         <y>140</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask21">
-       <property name="geometry">
-        <rect>
-         <x>42</x>
-         <y>140</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask20">
-       <property name="geometry">
-        <rect>
-         <x>8</x>
-         <y>140</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="masks_ComboBox">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>221</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="maskFactor_SpinBox">
-       <property name="geometry">
-        <rect>
-         <x>17</x>
-         <y>259</y>
-         <width>62</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="decimals">
-        <number>4</number>
-       </property>
-       <property name="minimum">
-        <double>-1000.000000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>999.990000000000009</double>
-       </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
-       </property>
-       <property name="value">
-        <double>1.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="maskBias_SpinBox">
-       <property name="geometry">
-        <rect>
-         <x>127</x>
-         <y>259</y>
-         <width>51</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="minimum">
-        <double>-255.000000000000000</double>
-       </property>
-       <property name="maximum">
-        <double>255.000000000000000</double>
-       </property>
-       <property name="singleStep">
-        <double>0.100000000000000</double>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_7">
-       <property name="geometry">
-        <rect>
-         <x>17</x>
-         <y>239</y>
-         <width>47</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Фактор</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_8">
-       <property name="geometry">
-        <rect>
-         <x>127</x>
-         <y>239</y>
-         <width>51</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Смещение</string>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask03">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>80</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask04">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>143</x>
-         <y>80</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask13">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>110</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask14">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>143</x>
-         <y>110</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask24">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>143</x>
-         <y>140</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask23">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>140</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask32">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>76</x>
-         <y>170</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask34">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>143</x>
-         <y>170</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask30">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>8</x>
-         <y>170</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask31">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>42</x>
-         <y>170</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask33">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>170</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask42">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>76</x>
-         <y>200</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask43">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>110</x>
-         <y>200</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask44">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>143</x>
-         <y>200</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask40">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>8</x>
-         <y>200</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="sharpMask41">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="geometry">
-        <rect>
-         <x>42</x>
-         <y>200</y>
-         <width>35</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>false</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="accelerated">
-        <bool>false</bool>
-       </property>
-       <property name="correctionMode">
-        <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="showGroupSeparator" stdset="0">
-        <bool>false</bool>
-       </property>
-       <property name="prefix">
-        <string/>
-       </property>
-       <property name="suffix">
-        <string/>
-       </property>
-       <property name="decimals">
-        <number>1</number>
-       </property>
-       <property name="minimum">
-        <double>-100.000000000000000</double>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <double>0.000000000000000</double>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="radioButton_mask3x3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>50</y>
-         <width>82</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>3x3</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="radioButton_mask5x5">
-       <property name="geometry">
-        <rect>
-         <x>60</x>
-         <y>50</y>
-         <width>82</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>5x5</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_6">
      <attribute name="title">
-      <string>Шум</string>
+      <string>Noise</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox_8">
       <property name="geometry">
@@ -2361,7 +690,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Подкинуть соли и перца</string>
+       <string>Add black and white noise</string>
       </property>
       <widget class="QLabel" name="label_10">
        <property name="geometry">
@@ -2373,7 +702,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Белый шум</string>
+        <string>White noise</string>
        </property>
       </widget>
       <widget class="QSlider" name="whiteNoiseCount_Slider">
@@ -2421,7 +750,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Черный шум</string>
+        <string>Black noise</string>
        </property>
       </widget>
      </widget>
@@ -2435,7 +764,7 @@ QDialogButtonBox  QPushButton
        </rect>
       </property>
       <property name="title">
-       <string>Биполярный шум</string>
+       <string>Bipolar noise</string>
       </property>
       <widget class="QSlider" name="bioNoiseCount_Slider">
        <property name="geometry">
@@ -2460,112 +789,34 @@ QDialogButtonBox  QPushButton
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Арифметика</string>
+      <string>Arithmetic</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_14">
+     <widget class="ArithmeticWidget" name="arithmeticWidget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>261</width>
+        <height>281</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_7">
+     <attribute name="title">
+      <string>Other</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox_15">
       <property name="geometry">
        <rect>
         <x>10</x>
         <y>10</y>
         <width>241</width>
-        <height>131</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Изображение 2</string>
-      </property>
-      <widget class="QLabel" name="arithmeticImg_label">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>101</width>
-         <height>71</height>
-        </rect>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background: rgb(226, 226, 226)</string>
-       </property>
-       <property name="text">
-        <string>Выберите файл</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="arithmeticImgLoad_pushButton">
-       <property name="geometry">
-        <rect>
-         <x>120</x>
-         <y>70</y>
-         <width>111</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Выбрать файл..</string>
-       </property>
-      </widget>
-      <widget class="QCheckBox" name="aritmeticImgSize_checkBox">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>221</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Под размер изображения</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QComboBox" name="arithmeticOperations_comboBox">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>170</y>
-        <width>241</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="editable">
-       <bool>false</bool>
-      </property>
-      <property name="frame">
-       <bool>true</bool>
-      </property>
-      <property name="modelColumn">
-       <number>0</number>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_14">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>150</y>
-        <width>231</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Операция</string>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="groupBox_15">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>240</y>
-        <width>241</width>
         <height>111</height>
        </rect>
       </property>
       <property name="title">
-       <string>Другие операции</string>
+       <string>Contour operations</string>
       </property>
       <widget class="QCommandLinkButton" name="commandLinkButton_dilate">
        <property name="geometry">
@@ -2577,7 +828,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Увеличение контуров (Дилатация)</string>
+        <string>Enlargement (Dilation)</string>
        </property>
       </widget>
       <widget class="QCommandLinkButton" name="commandLinkButton_erosion">
@@ -2590,7 +841,7 @@ QDialogButtonBox  QPushButton
         </rect>
        </property>
        <property name="text">
-        <string>Сужение контуров (Эрозия)</string>
+        <string>Narrowing (Erosion)</string>
        </property>
       </widget>
      </widget>
@@ -2599,79 +850,12 @@ QDialogButtonBox  QPushButton
    <widget class="QWidget" name="widget" native="true">
     <property name="geometry">
      <rect>
-      <x>910</x>
+      <x>930</x>
       <y>0</y>
-      <width>261</width>
+      <width>241</width>
       <height>31</height>
      </rect>
     </property>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>16</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: grey;</string>
-     </property>
-     <property name="text">
-      <string>X:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="yPos_label">
-     <property name="geometry">
-      <rect>
-       <x>60</x>
-       <y>10</y>
-       <width>31</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: grey;</string>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="xPos_label">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>31</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_6">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>10</y>
-       <width>16</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: grey;</string>
-     </property>
-     <property name="text">
-      <string>Y:</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
@@ -2719,117 +903,10 @@ QDialogButtonBox  QPushButton
 border: 1px solid rgb(184, 225, 255);</string>
     </property>
     <property name="text">
-     <string>Сохранить изменения</string>
+     <string>Save changes</string>
     </property>
     <property name="checkable">
      <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QCommandLinkButton" name="btn_back_action">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>-2</y>
-      <width>31</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>images/iconfinder_4_-_Left_1815571.png</normaloff>images/iconfinder_4_-_Left_1815571.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>24</width>
-      <height>24</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QCommandLinkButton" name="btn_redo_action">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>-2</y>
-      <width>31</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>images/iconfinder_3_-_Right_1815570.png</normaloff>images/iconfinder_3_-_Right_1815570.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>24</width>
-      <height>24</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QCommandLinkButton" name="commandLinkButton">
-    <property name="geometry">
-     <rect>
-      <x>120</x>
-      <y>-2</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>CommandLinkButton</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>images/zoom-in.png</normaloff>images/zoom-in.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>24</width>
-      <height>24</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QCommandLinkButton" name="btn_zoom_out">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>-2</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>CommandLinkButton</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>images/zoom-out.png</normaloff>images/zoom-out.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>24</width>
-      <height>24</height>
-     </size>
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollArea">
@@ -2983,6 +1060,53 @@ border: 1px solid rgb(184, 225, 255);</string>
      </size>
     </property>
    </widget>
+   <widget class="QWidget" name="widget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>13</x>
+      <y>0</y>
+      <width>191</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="UndoRedoActionsWidget" name="undoRedoWidget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="ZoomWidget" name="zoomWidget" native="true">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -2996,7 +1120,7 @@ border: 1px solid rgb(184, 225, 255);</string>
    </property>
    <widget class="QMenu" name="menu_file">
     <property name="title">
-     <string>Файл</string>
+     <string>File</string>
     </property>
     <addaction name="actionNewFile"/>
     <addaction name="actionOpenFile"/>
@@ -3005,45 +1129,54 @@ border: 1px solid rgb(184, 225, 255);</string>
    </widget>
    <widget class="QMenu" name="menu">
     <property name="title">
-     <string>Изоображение</string>
+     <string>Image</string>
     </property>
     <widget class="QMenu" name="menu_6">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
-      <string>Поворот</string>
+      <string>Rotate</string>
      </property>
      <addaction name="action_TransformAngleLeft"/>
      <addaction name="action_TransformAngleRight"/>
     </widget>
     <widget class="QMenu" name="menu_7">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
-      <string>Расположение</string>
+      <string>Transform</string>
      </property>
      <addaction name="action_TransformByVertical"/>
      <addaction name="action_TransformByHorizontal"/>
     </widget>
     <addaction name="actionInfoImage"/>
     <addaction name="menu_6"/>
+    <addaction name="action_symmetryVerticalTransform"/>
+    <addaction name="action_symmetryHorizontalTransform"/>
     <addaction name="menu_7"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
-     <string>Фильтр</string>
+     <string>Normalization</string>
     </property>
     <widget class="QMenu" name="menu_8">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="title">
-      <string>Размытие</string>
+      <string>Blur</string>
      </property>
      <addaction name="action_averageBlur"/>
     </widget>
-    <addaction name="action_symmetryVerticalTransform"/>
-    <addaction name="action_symmetryHorizontalTransform"/>
     <addaction name="action_normalizationImage"/>
     <addaction name="separator"/>
     <addaction name="menu_8"/>
    </widget>
    <widget class="QMenu" name="menu_5">
     <property name="title">
-     <string>Дополнительное</string>
+     <string>Tools</string>
     </property>
     <addaction name="action_equalizeHist"/>
    </widget>
@@ -3054,32 +1187,38 @@ border: 1px solid rgb(184, 225, 255);</string>
   </widget>
   <action name="actionOpenFile">
    <property name="text">
-    <string>Открыть</string>
+    <string>Open</string>
    </property>
   </action>
   <action name="actionSaveFile">
    <property name="text">
-    <string>Сохранить</string>
+    <string>Save</string>
    </property>
   </action>
   <action name="actionSave_As">
    <property name="text">
-    <string>Сохранить как...</string>
+    <string>Save As..</string>
    </property>
   </action>
   <action name="actionInfoImage">
    <property name="text">
-    <string>Информация об изоображении</string>
+    <string>About image</string>
    </property>
   </action>
   <action name="action_symmetryVerticalTransform">
    <property name="text">
-    <string>Симметричное вертикальное отображение</string>
+    <string>Symmetric vertical</string>
+   </property>
+   <property name="toolTip">
+    <string>Symmetric vertical</string>
    </property>
   </action>
   <action name="action_symmetryHorizontalTransform">
    <property name="text">
-    <string>Симметричное горизонтальное отображение</string>
+    <string>Symmetric horizontal</string>
+   </property>
+   <property name="toolTip">
+    <string>Symmetric horizontal</string>
    </property>
   </action>
   <action name="action_TransformAngleLeft">
@@ -3087,12 +1226,12 @@ border: 1px solid rgb(184, 225, 255);</string>
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Поворот влево</string>
+    <string>Rotate to left</string>
    </property>
   </action>
   <action name="action_TransformAngleRight">
    <property name="text">
-    <string>Поворот вправо</string>
+    <string>Rotate to right</string>
    </property>
   </action>
   <action name="action_TransformByHorizontal">
@@ -3110,76 +1249,88 @@ border: 1px solid rgb(184, 225, 255);</string>
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Новый файл</string>
+    <string>New file</string>
    </property>
   </action>
   <action name="action_equalizeHist">
    <property name="text">
-    <string>Эквализация гистограммы</string>
+    <string>Histogram equalization</string>
    </property>
   </action>
   <action name="action_normalizationImage">
    <property name="text">
-    <string>Нормализировать изоображение</string>
+    <string>Normalize black and white image</string>
+   </property>
+   <property name="toolTip">
+    <string>Normalize black and white image</string>
    </property>
   </action>
   <action name="undo_action">
    <property name="text">
-    <string>Отменить</string>
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo</string>
    </property>
   </action>
   <action name="redo_action">
    <property name="text">
-    <string>Повторить</string>
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
    </property>
   </action>
   <action name="action_averageBlur">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Усредняющий фильтр</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KernelWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/KernelWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ArithmeticWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/ArithmeticWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ZoomWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/ZoomWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>UndoRedoActionsWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/UndoRedoActionsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EffectsWidget</class>
+   <extends>QWidget</extends>
+   <header>Widgets/EffectsWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>sharpMask00</tabstop>
-  <tabstop>sharpMask01</tabstop>
-  <tabstop>sharpMask02</tabstop>
-  <tabstop>sharpMask03</tabstop>
-  <tabstop>sharpMask04</tabstop>
-  <tabstop>sharpMask10</tabstop>
-  <tabstop>sharpMask11</tabstop>
-  <tabstop>sharpMask12</tabstop>
-  <tabstop>sharpMask13</tabstop>
-  <tabstop>sharpMask14</tabstop>
-  <tabstop>sharpMask20</tabstop>
-  <tabstop>sharpMask21</tabstop>
-  <tabstop>sharpMask22</tabstop>
-  <tabstop>sharpMask23</tabstop>
-  <tabstop>sharpMask24</tabstop>
-  <tabstop>sharpMask30</tabstop>
-  <tabstop>sharpMask31</tabstop>
-  <tabstop>sharpMask32</tabstop>
-  <tabstop>sharpMask33</tabstop>
-  <tabstop>sharpMask34</tabstop>
-  <tabstop>sharpMask40</tabstop>
-  <tabstop>sharpMask41</tabstop>
-  <tabstop>sharpMask42</tabstop>
-  <tabstop>sharpMask43</tabstop>
-  <tabstop>sharpMask44</tabstop>
-  <tabstop>maskFactor_SpinBox</tabstop>
-  <tabstop>maskBias_SpinBox</tabstop>
-  <tabstop>sharpMask_applyBtn</tabstop>
   <tabstop>btn_revert_processImage</tabstop>
   <tabstop>rndNoise_saveBtn</tabstop>
-  <tabstop>masks_ComboBox</tabstop>
-  <tabstop>radioButton_mask3x3</tabstop>
-  <tabstop>radioButton_mask5x5</tabstop>
   <tabstop>binarTresholdRed_Slider</tabstop>
   <tabstop>blurAverage_Slider</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>contrastMax_spinBox</tabstop>
   <tabstop>blurGausSlider</tabstop>
   <tabstop>contrastrgb_Slider</tabstop>
-  <tabstop>viewTypeComboBox</tabstop>
   <tabstop>binarTreshold_Slider</tabstop>
   <tabstop>binarTresholdGreen_Slider</tabstop>
   <tabstop>commandLinkButton_medianSquare_2</tabstop>
@@ -3193,10 +1344,6 @@ border: 1px solid rgb(184, 225, 255);</string>
   <tabstop>blackNoiseCount_Slider</tabstop>
   <tabstop>bioNoiseCount_Slider</tabstop>
   <tabstop>horizontalSlider_speedBlur</tabstop>
-  <tabstop>btn_back_action</tabstop>
-  <tabstop>btn_redo_action</tabstop>
-  <tabstop>commandLinkButton</tabstop>
-  <tabstop>btn_zoom_out</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>binarTresholdBlue_Slider</tabstop>
  </tabstops>
