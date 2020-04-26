@@ -1,8 +1,9 @@
 #ifndef PLOTDIALOG_H
 #define PLOTDIALOG_H
 
+#include <Image.h>
 #include <QDialog>
-#include <qcustomplot.h>
+#include <Widgets/qcustomplot.h>
 
 namespace Ui {
 class PlotDialog;
@@ -17,6 +18,7 @@ public:
     ~PlotDialog();
 
     QCustomPlot *getPlot();
+    void updatePlot(Image *proccessingImage, Image *savedImage);
 private:
     Ui::PlotDialog *ui;
 };
