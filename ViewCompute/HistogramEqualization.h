@@ -1,11 +1,10 @@
 #ifndef HISTOGRAMEQUALIZATION_H
 #define HISTOGRAMEQUALIZATION_H
 
-#include <image.h>
+#include "Filter.h"
+#include <Image.h>
 
-
-
-class HistogramEqualization
+class HistogramEqualization  : protected Filter
 {
 public:
     HistogramEqualization();

@@ -1,11 +1,11 @@
 #ifndef BLURAVERAGE_H
 #define BLURAVERAGE_H
 
-#include <image.h>
+#include <Image.h>
+#include <ViewCompute/Filter.h>
 
 
-
-class BlurAverage
+class BlurAverage : protected  Filter
 {
 public:
     static void proccess(Image *original, Image *processed, unsigned int maskSize);

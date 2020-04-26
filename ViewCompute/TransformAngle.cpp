@@ -16,7 +16,7 @@ void TransformAngle::rotateLeft(Image *original, Image *image)
             //float x = cos(angle) * (col-x0) - sin(angle) * (row - y0) + x0;
             //float y = sin(angle) * (col-x0) + cos(angle) * (row - y0) + y0;
             //rotatedImg.at<Vec3b>(x, y) = original->getCvImg().at<Vec3b>(row, col);
-//            rotatedImg.at<Vec3b>(col, row) = original->getCvImg().at<Vec3b>(row, col);
+            //rotatedImg.at<Vec3b>(col, row) = original->getCvImg().at<Vec3b>(row, col);
 
         }
 

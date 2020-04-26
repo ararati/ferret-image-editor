@@ -1,14 +1,12 @@
 #ifndef FILTER_H
 #define FILTER_H
 
-#include <image.h>
-
-
 
 class Filter
 {
 public:
-    static void revertBorders(Image *original, Image *processed, int size);
+    static int sumColor(int color, int val);
+    static int getValidRgb(int color);
 };
 
 #endif // FILTER_H

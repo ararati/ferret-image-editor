@@ -1,11 +1,10 @@
 #ifndef CONTRASTVIEW_H
 #define CONTRASTVIEW_H
 
-#include <image.h>
+#include "Filter.h"
+#include <Image.h>
 
-
-
-class ContrastView
+class ContrastView  : protected Filter
 {
 public:
     static void processBW(Image *originalImg, Image *processImg, int min, int max);

@@ -1,6 +1,4 @@
 #include "BlurAverage.h"
-
-#include <Helper.h>
 #include <qgenericmatrix.h>
 
 void BlurAverage::proccess(Image *original, Image *processing, unsigned int maskSize)

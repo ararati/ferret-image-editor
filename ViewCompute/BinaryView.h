@@ -1,11 +1,10 @@
 #ifndef BINARYVIEW_H
 #define BINARYVIEW_H
 
-#include <image.h>
+#include "Filter.h"
+#include <Image.h>
 
-
-
-class BinaryView
+class BinaryView  : protected Filter
 {
 public:
     static void process(Image* original, Image* image, int treshold);

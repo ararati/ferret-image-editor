@@ -1,11 +1,11 @@
 #ifndef TRANSFORMPOSITION_H
 #define TRANSFORMPOSITION_H
 
-#include <image.h>
+#include "Filter.h"
 
+#include <Image.h>
 
-
-class TransformPosition
+class TransformPosition : protected Filter
 {
 public:
     static void transformX(Image* original, Image* image, int step);

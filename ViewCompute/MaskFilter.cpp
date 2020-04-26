@@ -5,12 +5,11 @@
 void MaskFilter::proccess(Image *original, Image *processing, int maskSize, float mask[31][31], double factor, double bias)
 {
     int maskMeed = maskSize/2, tx = 0, ty = 0;
-    qInfo() << maskMeed;
     int height = processing->height(), width = processing->width();
     uint maskCeils = maskSize*maskSize;
     QRgb tmpPx;
 
-    //Необрабатываем рамки
+    //Without borders
     float tRed, tGreen, tBlue, tmpMaskSize;
     for(int x = 0; x < width; x++)
     {

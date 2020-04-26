@@ -1,11 +1,10 @@
 #ifndef BLURGAUS_H
 #define BLURGAUS_H
 
-#include <image.h>
+#include <Image.h>
+#include <ViewCompute/Filter.h>
 
-
-
-class BlurGaus
+class BlurGaus  :  protected Filter
 {
 public:
     static void proccess(Image *original, Image *processed, unsigned int maskSize);

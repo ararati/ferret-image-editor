@@ -21,12 +21,6 @@ QVector<double> HistogramEqualization::bwBrightnessData(Image* img) {
         }
     }
 
-//    for(int i = 0; i < 256; i++)
-//        qInfo() << i << ": " << brightness[i];
-
-//    qInfo() << "Min " << *std::min_element(brightness.constBegin(), brightness.constEnd());
-//    qInfo() << "Max " << *std::max_element(brightness.constBegin(), brightness.constEnd());
-
     return brightness;
 }
 
@@ -46,9 +40,7 @@ QVector<double> HistogramEqualization::bwNormalization(Image* img) {
     for(int i = 0; i < 256; i++)
         t += normalizeH[i];
 
-    qInfo() << t;
-
-    //Кумулятивная гистограмма
+    //The cumulative histogram
     int sum;
     for(int i = 0; i < bins; i++) {
         sum = 0;
@@ -58,10 +50,7 @@ QVector<double> HistogramEqualization::bwNormalization(Image* img) {
         cumulatedH[i] = sum + 0.5;
     }
 
-    qInfo() << *std::min_element(cumulatedH.constBegin(), cumulatedH.constEnd());
-    qInfo() << *std::max_element(cumulatedH.constBegin(), cumulatedH.constEnd());
-
-    //Нормализация изоображения
+    //Normalization
     for(int x = 0; x < img->width(); x++)
     {
         for(int y = 0; y < img->height(); y++)

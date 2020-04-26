@@ -1,13 +1,10 @@
 #ifndef BLURMEDIAN_H
 #define BLURMEDIAN_H
 
-#include <image.h>
-
+#include <Image.h>
 #include <ViewCompute/Filter.h>
 
-
-
-class BlurMedian : Filter
+class BlurMedian : protected Filter
 {
 public:
     static void square(Image *original, Image *processed);

@@ -1,11 +1,11 @@
 #ifndef TRANSFORMANGLE_H
 #define TRANSFORMANGLE_H
 
-#include <image.h>
+#include "Filter.h"
 
+#include <Image.h>
 
-
-class TransformAngle
+class TransformAngle  : protected Filter
 {
 public:
     static void rotateLeft(Image* original, Image* image);

@@ -1,11 +1,10 @@
 #ifndef NOISE_H
 #define NOISE_H
 
-#include <image.h>
+#include <Image.h>
+#include <ViewCompute/Filter.h>
 
-
-
-class Noise
+class Noise : protected Filter
 {
 public:
     static void proccess(Image *original, Image *processed, unsigned int countWhite, unsigned int countBlack);

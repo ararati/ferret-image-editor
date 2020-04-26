@@ -1,10 +1,11 @@
 #ifndef ARITHMETICOPERATIONS_H
 #define ARITHMETICOPERATIONS_H
 
-#include <image.h>
+#include "Filter.h"
+#include <Image.h>
 #include <algorithm>
 
-class ArithmeticOperations
+class ArithmeticOperations  : protected Filter
 {
 public:
     static void min(Image* original, Image* processing, Image* image);

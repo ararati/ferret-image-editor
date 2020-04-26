@@ -1,7 +1,5 @@
 #include "ContrastView.h"
-
 #include <qdebug.h>
-#include <Helper.h>
 
 QRgb ContrastView::calculateContrast(QRgb pixel, int min, int max, int bins) {
     QRgb newColor;
@@ -30,8 +28,6 @@ void ContrastView::processBW(Image *originalImg, Image *processImg, int min, int
         {
             QRgb pixel = originalImg->pixel(x, y);
             processImg->setPixel(x, y, calculateContrast(pixel, min, max));
-//            Vec3b pixel = originalImg->getCvImg().at<Vec3b>(row, col);
-//            processImg->getCvImg().at<Vec3b>(row, col) = calculateContrast(pixel, min, max);
         }
     }
 }
@@ -46,15 +42,11 @@ void ContrastView::processRGB(Image *originalImg, Image *processImg, float C)
         {
                 QRgb pixel = originalImg->pixel(x, y);
                 processImg->setPixel(x, y, qRgb(
-                                            Helper::valid_rgb(factor * (qRed(pixel) -128) + 128),
-                                            Helper::valid_rgb(factor * (qGreen(pixel) -128) + 128),
-                                            Helper::valid_rgb(factor * (qBlue(pixel) -128) + 128)
+                                            Filter::getValidRgb(factor * (qRed(pixel) -128) + 128),
+                                            Filter::getValidRgb(factor * (qGreen(pixel) -128) + 128),
+                                            Filter::getValidRgb(factor * (qBlue(pixel) -128) + 128)
                                             )
                                      );
-                //processImg->getCvImg().at<Vec3b>(row, col)[i] = saturate_cast<uchar>(C * (originalImg->getCvImg().at<Vec3b>(row,col)[i] + 1));
-//                processImg->getCvImg().at<Vec3b>(row, col)[i] = saturate_cast<uchar>(factor * (originalImg->getCvImg().at<Vec3b>(row,col)[i] - 128) + 128);
-            //Vec3b pixel = originalImg->getCvImg().at<Vec3b>(row, col);
-            //processImg->getCvImg().at<Vec3b>(row, col) = calculateContrast(pixel, min, max);
         }
     }
 }

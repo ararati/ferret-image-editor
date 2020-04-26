@@ -1,8 +1,9 @@
 #ifndef KERNELFILTERS_H
 #define KERNELFILTERS_H
 
+#include "Filter.h"
 
-class KernelFilters
+class KernelFilters  : protected Filter
 {
 public:
     KernelFilters();

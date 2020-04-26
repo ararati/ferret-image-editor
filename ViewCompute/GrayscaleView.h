@@ -1,11 +1,10 @@
 #ifndef GRAYSCALEVIEW_H
 #define GRAYSCALEVIEW_H
 
-#include <image.h>
+#include "Filter.h"
+#include <Image.h>
 
-
-
-class GrayscaleView
+class GrayscaleView  : protected Filter
 {
 public:
     static void process(Image *originalImg, Image *processImg);

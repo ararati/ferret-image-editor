@@ -1,11 +1,11 @@
 #ifndef SYMMETRYTRANSFORM_H
 #define SYMMETRYTRANSFORM_H
 
-#include <image.h>
+#include "Filter.h"
 
+#include <Image.h>
 
-
-class SymmetryTransform
+class SymmetryTransform  : protected Filter
 {
 public:
     static void transformHorizontal(Image* originalImg, Image* processImg);

@@ -1,12 +1,11 @@
 #ifndef NEGATIVEVIEW_H
 #define NEGATIVEVIEW_H
 
-#include <image.h>
+#include "Filter.h"
+#include <Image.h>
 
 
-
-
-class NegativeView
+class NegativeView  : protected Filter
 {
 public:
     static void process(Image *originalImg, Image *processImg);

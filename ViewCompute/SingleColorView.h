@@ -1,11 +1,11 @@
 #ifndef SINGLECOLORVIEW_H
 #define SINGLECOLORVIEW_H
 
-#include <image.h>
+#include "Filter.h"
 
+#include <Image.h>
 
-
-class SingleColorView
+class SingleColorView  : protected Filter
 {
 public:
     static void process(Image *originalImg, Image *processImg, int colorIndex=0);
