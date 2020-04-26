@@ -4,14 +4,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++11
 
-#INCLUDEPATH += D:\OpenCV\opencv-mingw\install\include
-
-#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_core420.dll
-#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_highgui420.dll
-#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_imgcodecs420.dll
-#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_imgproc420.dll
-#LIBS += D:\OpenCV\opencv-mingw\bin\libopencv_calib3d420.dll
-
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
