@@ -4,10 +4,7 @@
 #include <QImage>
 #include <iostream>
 
-//#include <opencv2/opencv.hpp>
-
 using namespace std;
-//using namespace cv;
 
 class Image : public QImage
 {
@@ -22,12 +19,9 @@ class Image : public QImage
         Image();
         Image(QString path);
 
-        QImage toQImage();
         void copyFrom(QImage *);
         void setPath(QString path);
         bool sameSize(QImage *img);
-
-        QList<int> at(int x, int y);
 };
 
 #endif // IMAGE_H
