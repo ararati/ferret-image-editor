@@ -24,7 +24,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    Helper.cpp \
+    Widgets/ArithmeticWidget.cpp \
+    Widgets/EffectsWidget.cpp \
+    Widgets/KernelWidget.cpp \
     Image.cpp \
     ViewCompute/ArithmeticOperations.cpp \
     ViewCompute/BinaryView.cpp \
@@ -44,15 +46,18 @@ SOURCES += \
     ViewCompute/SymmetryTransform.cpp \
     ViewCompute/TransformAngle.cpp \
     ViewCompute/TransformPosition.cpp \
-    ViewContainer.cpp \
-    Windows/CoverImageDialog.cpp \
+    Widgets/UndoRedoActionsWidget.cpp \
+    Widgets/ZoomWidget.cpp \
     Windows/PlotDialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    qcustomplot.cpp
+    Widgets/qcustomplot.cpp
 
 HEADERS += \
-    Helper.h \
+    Image.h \
+    Widgets/ArithmeticWidget.h \
+    Widgets/EffectsWidget.h \
+    Widgets/KernelWidget.h \
     ViewCompute/ArithmeticOperations.h \
     ViewCompute/BinaryView.h \
     ViewCompute/Blur/BlurAverage.h \
@@ -71,17 +76,19 @@ HEADERS += \
     ViewCompute/SymmetryTransform.h \
     ViewCompute/TransformAngle.h \
     ViewCompute/TransformPosition.h \
-    ViewContainer.h \
-    Windows/CoverImageDialog.h \
+    Widgets/UndoRedoActionsWidget.h \
+    Widgets/ZoomWidget.h \
     Windows/PlotDialog.h \
-    image.h \
     mainwindow.h \
-    qcustomplot.h
+    Widgets/qcustomplot.h
 
 FORMS += \
-    Windows/CoverImageDialog.ui \
+    Widgets/arithmeticwidget.ui \
+    Widgets/effectswidget.ui \
+    Widgets/kernelwidget.ui \
+    Widgets/undoRedoActionsWidget.ui \
+    Widgets/zoomwidget.ui \
     Windows/PlotDialog.ui \
-    Windows/PlotWindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
