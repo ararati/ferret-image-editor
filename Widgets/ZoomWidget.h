@@ -21,6 +21,8 @@ public slots:
     void on_commandLinkButton_clicked();
     void on_btn_zoom_out_clicked();
 private:
+    int maxZoomFactor;
+    int step = 1;
     Ui::ZoomWidget *ui;
     MainWindow* mainWindow;
 };
