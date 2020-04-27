@@ -31,6 +31,7 @@
 #include <ViewCompute/Noise/Noise.h>
 #include <ViewCompute/ArithmeticOperations.h>
 
+#include <Windows/AboutDialog.h>
 #include <Windows/PlotDialog.h>
 
 using  namespace std;
@@ -41,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
 
     plotDialog = new PlotDialog(this);
     plotDialog->setModal(false);
+
+    viewContainerWidth = MainWindow::width() - ui->propertyContainer->maximumSize().width();
+    viewContainerHeight = MainWindow::height();
 
     QString path = ":/images/Lenna.png";
     this->originalImage = Image(path);
@@ -59,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     ui->undoRedoWidget->setMainWindow(this);
     ui->effectsWidget->setMainWindow(this);
 
-    setInitialImage();
+//    setInitialImage();
     setStyleSheet();
 }
 
@@ -68,11 +72,26 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+int MainWindow::getViewContainerHeight() {
+    return viewContainerHeight;
+}
+
+int MainWindow::getViewContainerWidth() {
+    return viewContainerWidth;
+}
+
+void MainWindow::setViewContainerHeight(int arg) {
+    viewContainerHeight = arg;
+}
+
+void MainWindow::setViewContainerWidth(int arg) {
+    viewContainerWidth = arg;
+}
+
 void MainWindow::setInitialImage() {
     QImage img(":/images/Lenna.png");
-
-    if(img.width() > ui->label->width() || img.height() > ui->label->height()) {
-        img = img.scaled(ui->label->width()*zoomFactor, ui->label->height()*zoomFactor, Qt::KeepAspectRatio);
+    if(img.width() > viewContainerWidth || img.height() > viewContainerHeight) {
+        img = img.scaled(viewContainerWidth*zoomFactor, viewContainerHeight*zoomFactor, Qt::KeepAspectRatio);
     }
 
     ui->label->setPixmap(QPixmap::fromImage(img));
@@ -115,6 +134,15 @@ void MainWindow::updateHistogramEqualization() {
     plotDialog->updatePlot(&processImage, &originalImage);
 }
 
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+   QMainWindow::resizeEvent(event);
+
+   setViewContainerWidth(MainWindow::width()  - ui->propertyContainer->maximumSize().width() - 50);
+   setViewContainerHeight(MainWindow::height() - 110);
+   this->updateViewImage(true);
+}
+
 void MainWindow::saveProcessImage()
 {
     ui->undoRedoWidget->addToHistory(this->originalImage);
@@ -137,8 +165,14 @@ void MainWindow::displayImage(Image img, QLabel* source, bool scaling) {
     viewImage = QPixmap::fromImage(img);
 
     if(scaling ) {
-        if(zoomFactor > 1 || (img.width() > ui->label->width() || img.height() > ui->label->width())) {
-            viewImage = viewImage.scaled(ui->label->width()*zoomFactor, ui->label->width()*zoomFactor, Qt::KeepAspectRatio);
+        if(zoomFactor == 1 && (img.width() > viewContainerWidth || img.height() > viewContainerHeight)) {
+            viewImage = viewImage.scaled(viewContainerWidth, viewContainerHeight, Qt::KeepAspectRatio);
+        } else if(zoomFactor == 1) {
+            viewImage = viewImage.scaled(viewImage.width(), viewImage.height(), Qt::KeepAspectRatio);
+        }  else if(zoomFactor == 1.1  && (img.width() < viewContainerWidth && img.height() < viewContainerHeight))  {
+            viewImage = viewImage.scaled(viewContainerWidth, viewContainerHeight, Qt::KeepAspectRatio);
+        } else {
+            viewImage = viewImage.scaled(viewContainerWidth*zoomFactor, viewContainerHeight*zoomFactor, Qt::KeepAspectRatio);
         }
     }
 
@@ -496,4 +530,15 @@ void MainWindow::on_commandLinkButton_erosion_clicked()
     ArithmeticOperations::erosion(&this->originalImage, &this->processImage);
 
     this->updateViewImage();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QDialog* dialog = new AboutDialog(this);
+    dialog->exec();
+}
+
+void MainWindow::on_applyChanges_btn_clicked()
+{
+    this->applyProcessImage();
 }

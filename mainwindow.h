@@ -38,6 +38,8 @@ public:
     float getZoomFactor();
     float setZoomFactor(float fact);
     QImage scaleImage(QImage *img);
+    int getViewContainerHeight();
+    int getViewContainerWidth();
 private slots:
 
     void on_brightnessSlider_valueChanged(int value);
@@ -116,6 +118,11 @@ private slots:
 
     void on_commandLinkButton_erosion_clicked();
 
+    void on_actionAbout_triggered();
+
+    void resizeEvent(QResizeEvent *event);
+    void on_applyChanges_btn_clicked();
+
 signals:
 
 
@@ -130,6 +137,9 @@ private:
     bool plotDialogIsOpen = false;
     float zoomFactor = 1.f;
 
+    int viewContainerHeight = 0;
+    int viewContainerWidth = 0;
+
     void contrastInputChanged();
     void processViewType(QString type);
     void loadImageByPath(QString path);
@@ -137,5 +147,7 @@ private:
     void saveFileAs();
     void setStyleSheet();
     void setInitialImage();
+    void setViewContainerHeight(int arg);
+    void setViewContainerWidth(int arg);
 };
 #endif // MAINWINDOW_H
