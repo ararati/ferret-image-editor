@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     viewContainerWidth = MainWindow::width() - ui->propertyContainer->maximumSize().width();
     viewContainerHeight = MainWindow::height();
 
-    QString path = ":/images/Lenna.png";
+    QString path = ":/images/cloud_and_mountain1200.png";
     this->originalImage = Image(path);
     this->processImage = Image(path);
 
@@ -89,7 +89,7 @@ void MainWindow::setViewContainerWidth(int arg) {
 }
 
 void MainWindow::setInitialImage() {
-    QImage img(":/images/Lenna.png");
+    QImage img(":/images/cloud_and_mountain1200.png");
     if(img.width() > viewContainerWidth || img.height() > viewContainerHeight) {
         img = img.scaled(viewContainerWidth*zoomFactor, viewContainerHeight*zoomFactor, Qt::KeepAspectRatio);
     }
