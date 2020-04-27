@@ -20,6 +20,8 @@ void UndoRedoActionsWidget::setMainWindow(MainWindow* mainWindow) {
 void UndoRedoActionsWidget::addToHistory(Image obj) {
     pastActions.push(obj);
 
+    qInfo() << (pastActions.count() == 0);
+    ui->btn_back_action->setDisabled(pastActions.count() == 0);
     ui->btn_redo_action->setDisabled(redoActions.count() == 0);
 }
 
@@ -45,7 +47,7 @@ void UndoRedoActionsWidget::on_btn_back_action_clicked()
 
     QImage img = pastActions.pop();
 
-    mainWindow->getOriginalImage()->copyFrom(&img);
+    mainWindow->getProcessImage()->copyFrom(&img);
     mainWindow->getOriginalImage()->copyFrom(mainWindow->getProcessImage());
     mainWindow->updateViewImage();
 
