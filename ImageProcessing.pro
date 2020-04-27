@@ -40,6 +40,7 @@ SOURCES += \
     ViewCompute/TransformPosition.cpp \
     Widgets/UndoRedoActionsWidget.cpp \
     Widgets/ZoomWidget.cpp \
+    Windows/AboutDialog.cpp \
     Windows/PlotDialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     ViewCompute/TransformPosition.h \
     Widgets/UndoRedoActionsWidget.h \
     Widgets/ZoomWidget.h \
+    Windows/AboutDialog.h \
     Windows/PlotDialog.h \
     mainwindow.h \
     Widgets/qcustomplot.h
@@ -81,6 +83,7 @@ FORMS += \
     Widgets/undoRedoActionsWidget.ui \
     Widgets/zoomwidget.ui \
     Windows/PlotDialog.ui \
+    Windows/aboutdialog.ui \
     mainwindow.ui
 
 # Default rules for deployment.
