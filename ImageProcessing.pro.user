@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.10.2, 2020-04-27T14:32:17. -->
+<!-- Written by QtCreator 4.10.2, 2020-05-04T18:09:55. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -132,7 +132,7 @@
     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:/User/Documents/Fourth course/II semester/Image processing/ImageP/ImageProcessing</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">D:/User/Documents/ImageEditorGit/image-editor</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
@@ -322,7 +322,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/User/Documents/Fourth course/II semester/Image processing/ImageP/ImageProcessing</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/User/Documents/ImageEditorGit/image-editor</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

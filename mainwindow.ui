@@ -30,7 +30,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="EditorResources.qrc">
-    <normaloff>:/images/s_icon.png</normaloff>:/images/s_icon.png</iconset>
+    <normaloff>:/images/icon.ico</normaloff>:/images/icon.ico</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">body {
