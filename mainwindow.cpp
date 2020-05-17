@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     viewContainerWidth = MainWindow::width() - ui->propertyContainer->maximumSize().width();
     viewContainerHeight = MainWindow::height();
 
-    QString path = ":/images/cloud_and_mountain1200.png";
+    QString path = ":/images/default_image.jpg";
     this->originalImage = Image(path);
     this->processImage = Image(path);
 

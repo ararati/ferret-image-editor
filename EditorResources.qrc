@@ -2,7 +2,6 @@
     <qresource prefix="/images"/>
     <qresource prefix="/">
         <file>images/icon-save.png</file>
-        <file>images/cloud_and_mountain1200.png</file>
         <file>images/zoom-in.png</file>
         <file>images/zoom-out.png</file>
         <file>images/arrow_left.png</file>
@@ -11,5 +10,6 @@
         <file>images/x.png</file>
         <file>images/icon124.png</file>
         <file>images/icon.ico</file>
+        <file>images/default_image.jpg</file>
     </qresource>
 </RCC>

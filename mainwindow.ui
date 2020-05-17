@@ -26,7 +26,7 @@
    <enum>Qt::DefaultContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Image editor</string>
+   <string>Ferret - image editor</string>
   </property>
   <property name="windowIcon">
    <iconset resource="EditorResources.qrc">
