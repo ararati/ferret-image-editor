@@ -1,4 +1,4 @@
-## Simple image editor
+## Ferret — image editor
 
 #### Features
 - Histogram equalization
@@ -10,6 +10,6 @@
 - and other features...
 
 #### License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the GNU General Public License v2.0 - see the LICENSE file for details.
 
 Copyright (c) 2020 Ararat Poghosyan
